@@ -21,7 +21,7 @@ Lista* lst_cria(void) {
     Lista* new;
     new = malloc(sizeof(Lista));
     if(new == NULL){
-        printf("Não foi possível alocar espaço na memória!");
+        printf("\n Não foi possível alocar espaço na memória! \n");
         exit(1);
     }
     return new;
@@ -45,7 +45,7 @@ void lst_insIni( Lista * lis , void * elem )
     pElem = CriarElemento( lis , elem ) ;
     if ( pElem == NULL )
     {
-        printf("Não foi possível alocar espaço na memória!");
+        printf("\n Não foi possível alocar espaço na memória! \n");
         exit(1);
     } 
 
@@ -128,7 +128,7 @@ void* lst_retFin (Lista* lis) {
         return NULL;
     }
     if  (lis->fin == NULL) {
-        printf("Nao ha elemento no fim da lista!\n");
+        printf("\n Nao ha elemento no fim da lista! \n");
         return NULL;
     }
     elem = lis->fin->info;
@@ -151,7 +151,7 @@ void* lst_retFin (Lista* lis) {
 
 void lst_posIni(Lista* lis) {
     if (lis == NULL){
-        printf("Lista vazia!");
+        printf("\n Lista vazia! \n");
     }
     lis->corr = lis->ini;
 }
@@ -159,11 +159,11 @@ void lst_posIni(Lista* lis) {
 void *lst_prox(Lista* lis){
     void *aux;
     if (lis == NULL){
-        printf("Lista vazia!");
+        printf("\n Lista vazia! \n");
         return NULL;
     }
     if (lis->corr == NULL){
-        printf("Corrente vazio!");
+        printf("\n Corrente vazio! \n");
         return NULL;
     }
     aux = lis->corr->info;
