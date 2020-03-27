@@ -19,11 +19,11 @@ struct lista {
 
 Lista* lst_cria(void) {
     Lista* new;
+    new = malloc(sizeof(Lista));
     if(new == NULL){
         printf("Não foi possível alocar espaço na memória!");
         exit(1);
     }
-    new = malloc(sizeof(Lista));
     return new;
 }
 
@@ -132,7 +132,7 @@ void* lst_retFin (Lista* lis) {
         printf("Nao ha elemento no fim da lista!\n");
         return NULL;
     }
-    elem = lis->ini->info;
+    elem = lis->fin->info;
     if  (lis->fin == lis->ini) {
         free(lis->fin);
         lis->fin = NULL;
@@ -142,11 +142,53 @@ void* lst_retFin (Lista* lis) {
     lis->corr = lis->ini;
     while(lis->corr->prox != lis->fin)
         lis->corr = lis->corr->prox;
-    free(lis->fin->info);
     free(lis->fin);
     lis->fin = lis->corr;
+    lis->fin->prox = NULL;
+    (lis->tam)--;
     return elem;
     
+}
+
+void lst_posIni(Lista* lis) {
+    if (lis == NULL){
+        printf("Lista vazia!");
+    }
+    lis->corr = lis->ini;
+}
+
+void *lst_prox(Lista* lis){
+    void *aux;
+    if (lis == NULL){
+        printf("Lista vazia!");
+        return NULL;
+    }
+    if (lis->corr == NULL){
+        printf("Corrente vazio!");
+        return NULL;
+    }
+    aux = lis->corr->info;
+    lis->corr = lis->corr->prox;
+    return aux;
+}
+
+void lst_libera(Lista* lis){
+    No *aux;
+    if(lis == NULL)
+        return;
+    if(lis->ini == NULL) {
+        LimparCabeca(lis);
+        return;
+    }
+    lst_posIni(lis);
+    while(lis->corr != NULL)
+    {
+        aux = lis->corr;
+        free(lis->corr->info);
+        lis->corr = lis->corr->prox;
+        free(aux);
+    }
+    LimparCabeca(lis);
 }
 
 /*****  Código das funções encapsuladas no módulo  *****/

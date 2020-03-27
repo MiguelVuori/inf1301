@@ -35,3 +35,9 @@ retorna o endere�o do elemento armazenado no n� corrente(campo corr) e faz c
 campo corr referencie o pr�ximo n� da lista.Caso a campo corr contenha o valor NULL esta
 opera��o dever� retornar o valor NULL*/
 void* lst_prox(Lista* lis);
+
+// – esta função deverá percorrer sequencialmente uma lista recebida
+// como parâmetro (Lista *) e para cada nó encontrado ela deverá: a) liberar a área de memória
+// referente ao elemento apontado pelo nó (info) e b) liberar a área de memória do próprio nó.
+// Após todos os nós terem sido liberados, o header da lista deverá ser liberado.
+void lst_libera(Lista *);

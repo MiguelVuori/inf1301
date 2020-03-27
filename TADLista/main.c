@@ -30,16 +30,24 @@ int main(void) {
 	aux = lst_retIni(f);
 	printf("*** Elemento Retirado %d ***\n", *aux);
 	exibeLista(f);
+	free(aux);
 	aux = lst_retIni(f);
 	printf("*** Elemento Retirado %d ***\n", *aux);
 	exibeLista(f);
+	free(aux);
 	aux = lst_retFin(f);
 	printf("*** Elemento Retirado %d ***\n", *aux);
 	exibeLista(f);
+	free(aux);
 	aux = lst_retFin(f);
 	printf("*** Elemento Retirado %d ***\n", *aux);
 	exibeLista(f);
 	exibeLista(f);
+	free(aux);
 	lst_libera(f);
+	free(a);
+	free(b);
+	free(c);
+	free(d);
 	return 0;
 }
