@@ -112,7 +112,6 @@ void* lst_retIni( Lista * lis )
     {
         pElem = lis->ini;
         lis->ini = lis->ini->prox;
-        lis->fin->prox = pElem;
         elem = pElem->info;
         free(pElem);
         (lis->tam)--;
