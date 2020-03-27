@@ -1,37 +1,37 @@
-#pragma once
+
 typedef struct no No;
 typedef struct lista Lista;
 
-/* cria o header de uma lista(lista vazia) e retorna o endereço da lista criada(endereço do header).*/
+/* cria o header de uma lista(lista vazia) e retorna o endereï¿½o da lista criada(endereï¿½o do header).*/
 Lista* lst_cria(void);
                   
-/*– retorna 1 se a lista estiver vazia ou 0, caso contrário.*/
+/*ï¿½ retorna 1 se a lista estiver vazia ou 0, caso contrï¿½rio.*/
 int lst_vazia(Lista* lis);
 
-/*– insere um elemento(void*) no início da lista(Lista*).*/
+/*ï¿½ insere um elemento(void*) no inï¿½cio da lista(Lista*).*/
 void lst_insIni(Lista* lis, void* elem);
 
- /*– insere um elemento(void*) no final da lista(Lista*).*/
+ /*ï¿½ insere um elemento(void*) no final da lista(Lista*).*/
 void lst_insFin(Lista* lis, void* elem);
 
-/*– retira o primeiro elemento da lista(Lista*) e retorna o seu endereço.
-Caso a lista esteja vazia a função deve retornar NULL.Obviamente, esta função deve manter o
-encadeamento da lista recebida como parâmetro.*/
+/*ï¿½ retira o primeiro elemento da lista(Lista*) e retorna o seu endereï¿½o.
+Caso a lista esteja vazia a funï¿½ï¿½o deve retornar NULL.Obviamente, esta funï¿½ï¿½o deve manter o
+encadeamento da lista recebida como parï¿½metro.*/
 void* lst_retIni(Lista* lis);
 
-/*– retira o último elemento da lista(Lista*) e retorna o seu endereço.
-Caso a lista esteja vazia a função deve retornar NULL.Obviamente, esta função deve manter o
-encadeamento da lista recebida como parâmetro.*/
+/*ï¿½ retira o ï¿½ltimo elemento da lista(Lista*) e retorna o seu endereï¿½o.
+Caso a lista esteja vazia a funï¿½ï¿½o deve retornar NULL.Obviamente, esta funï¿½ï¿½o deve manter o
+encadeamento da lista recebida como parï¿½metro.*/
 void* lst_retFin(Lista* lis);
 
-/*– esta função será usada para percorrer sequencialmente uma lista.
-Quando ela for executada o primeiro elemento da lista passará a ser o elemento corrente
-(campo corr).Caso a lista esteja vazia, o campo corr irá conter o valor NULL após a execução
-desta função.*/
+/*ï¿½ esta funï¿½ï¿½o serï¿½ usada para percorrer sequencialmente uma lista.
+Quando ela for executada o primeiro elemento da lista passarï¿½ a ser o elemento corrente
+(campo corr).Caso a lista esteja vazia, o campo corr irï¿½ conter o valor NULL apï¿½s a execuï¿½ï¿½o
+desta funï¿½ï¿½o.*/
 void lst_posIni(Lista* lis);
 
-/*– esta função será usada para percorrer sequencialmente uma lista.Ela
-retorna o endereço do elemento armazenado no nó corrente(campo corr) e faz com que o
-campo corr referencie o próximo nó da lista.Caso a campo corr contenha o valor NULL esta
-operação deverá retornar o valor NULL*/
+/*ï¿½ esta funï¿½ï¿½o serï¿½ usada para percorrer sequencialmente uma lista.Ela
+retorna o endereï¿½o do elemento armazenado no nï¿½ corrente(campo corr) e faz com que o
+campo corr referencie o prï¿½ximo nï¿½ da lista.Caso a campo corr contenha o valor NULL esta
+operaï¿½ï¿½o deverï¿½ retornar o valor NULL*/
 void* lst_prox(Lista* lis);
