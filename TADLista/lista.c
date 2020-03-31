@@ -177,6 +177,7 @@ void lst_libera(Lista* lis){
         return;
     if(lis->ini == NULL) {
         LimparCabeca(lis);
+        free(lis);
         return;
     }
     lst_posIni(lis);
@@ -188,6 +189,7 @@ void lst_libera(Lista* lis){
         free(aux);
     }
     LimparCabeca(lis);
+    free(lis);
 }
 
 /*****  Código das funções encapsuladas no módulo  *****/
