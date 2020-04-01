@@ -46,7 +46,7 @@ void *pilha_pop(Pilha* p)
 {
     if (p != NULL || !lst_vazia(p->lst))
     {
-        lst_retIni(p->lst);
+        return lst_retIni(p->lst);
     }
     return NULL;    
 }
