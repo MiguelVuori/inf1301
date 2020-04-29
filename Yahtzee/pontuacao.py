@@ -1,4 +1,3 @@
-from jogador import Jogador
 from dado import *
 
 __all__ = ['pontua', 'atualiza_pontuacao', 'soma_pontuacao', 'testa_bonus', 'mostra_tabela']
@@ -12,7 +11,7 @@ def pontua(jogador):
     pass
 
 def atualiza_pontuacao(jogador, pontos):
-    jogador.adiciona_pontos()
+    jogador["pontuacao"] += pontos
 
 def soma_pontuacao(jogador):
     pass
@@ -20,7 +19,9 @@ def soma_pontuacao(jogador):
 def testa_bonus(jogador):
     pass
 
-def mostra_tabela(jogador): # Fiz printando só a lista toda, sem lógica
-    print("------")
-    print("Pontuação: ")
-    print(jogador.pontuacao)
+def mostra_tabela(jogador):
+    print("\n")
+    print("Pontuação:".center(48, " "))
+    print("%d".center(48, " ") % jogador["pontuacao"])
+
+init()

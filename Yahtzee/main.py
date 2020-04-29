@@ -1,9 +1,7 @@
 from partida import *
 from pontuacao import *
 from dado import *
-from jogador import Jogador
+from utils import *
 
-n_jogadores = int(input("Número de jogadores: "))
-
-cria_jogo(n_jogadores)
+cria_jogo()
 inicia_jogo()
