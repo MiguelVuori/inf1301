@@ -1,13 +1,13 @@
-__all__ = ["tab_ins","tab_ret"]
+__all__ = ["tab_ins","tab_ret","tab_get","tab_print"]
 
 
+def init():
+    global  tabela
+    tabela = {}
 
-def tab_ins(campos,valores,tabela=None):
+def tab_ins(campos,valores):
     tpc = type(campos)
     tpv = type(valores)
-
-    if tabela == None:
-        tabela = {}
 
     if (tpc == tpv == list) and (len(campos) == len(valores)):
         for ind,campo in enumerate(campos):
@@ -16,10 +16,9 @@ def tab_ins(campos,valores,tabela=None):
         tabela[str(campos)] = valores
     else:
         print("Erro na criação da tabela: tamanho dos campos diferente do de valores")
-    
-    return tabela
 
-def tab_ret(campos,tabela):
+
+def tab_ret(campos):
     tpc = type(campos)
     valores = []
 
@@ -38,3 +37,24 @@ def tab_ret(campos,tabela):
         print("Campos possui typagem inválida, tente 'lis', 'str', 'float', 'int'")
     
     return valores
+
+def tab_get(*campos):
+    valor = None
+
+    if len(campos) >= 1:
+        for idx,campo in enumerate(campos):
+            try:
+                if idx == 0:
+                    valor =  tabela[campo]
+                else:
+                    valor = valor[campo]
+            except KeyError:
+                print("Caminho fornecido não existe")
+    
+    return valor
+
+def tab_print():
+    print(tabela)
+
+init()
+tabela = {}
