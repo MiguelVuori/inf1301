@@ -8,7 +8,11 @@ __all__ = ['cria_jogo', 'inicia_jogo', 'termina_jogo', 'inicia_vez', 'termina_ve
 
 def init():
     global jogadores
-
+    global tabela
+    tabela = {'Um': [False, 0], 'Dois': [False, 0], 'Três': [False, 0], 'Quatro': [False, 0], 'Cinco': [False, 0], 'Seis': [False, 0],
+    'Total Seção Superior': 0, 'Bônus': False, 'Trinca': [False, 0], 'Quadra': [False, 0], 'Full House': [False, 0], 'Sequência Mínimo': [False, 0],
+    'Sequência Máxima': [False, 0], 'YAHTZEE': False, 'Chance': [False, 0], 'Bônus Yahtzee': 0, 'Total Seção Inferior': 0} 
+    
 def cria_jogo():
     print("\nUse 'quit' como input para terminar o jogo\n")
     n_jogadores = input_handler(input("Número de jogadores: "), int)
@@ -17,7 +21,8 @@ def cria_jogo():
         nome = input_handler(input("Nome do jogador %d: " % id), str)
         jogadores[id] = {
             'nome': nome,
-            'pontuacao' : 0
+            'tabela': tabela
+            #'pontuacao' : 0
         }
 
 def inicia_jogo():
@@ -42,7 +47,33 @@ def inicia_vez(jogador):
         print("\n\n")
         print(" VEZ DO JOGADOR %s ".center(48, "-") % jogador["nome"].upper())
 
-        atualiza_pontuacao(jogador, joga_dado())
+        for i in range(3):
+        dados = []
+
+            if i == 0:
+                dados = joga_dado(5)
+
+            else:
+                j = 0
+                d_escolhidos = []
+
+                print(dados)
+
+                d_escolhidos = (input_handler(input(
+                    "Escolha quais dados quer relancar separados por espaco ou digite 0 para terminar acao: "), str)).split()
+                if d_escolhidos[0] == '0':
+                    atualiza_pontuacao(jogador, dados)
+                    return
+                else:
+                    novos_val = joga_dado(len(d_escolhidos))
+
+                    for numbers in d_escolhidos:
+                        d_escolhidos[j] = int(numbers)
+                        dados[d_escolhidos[j]] = novos_val[j]]
+                        j = j + 1
+                        
+        categoria = input_handler(input("Escolha a categoria de pontucao: "), str)
+        pontua(categoria,dados)
 
 
 def termina_vez(jogador):
