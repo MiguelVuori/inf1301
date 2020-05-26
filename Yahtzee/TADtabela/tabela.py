@@ -57,4 +57,3 @@ def tab_print():
     print(tabela)
 
 init()
-tabela = {}

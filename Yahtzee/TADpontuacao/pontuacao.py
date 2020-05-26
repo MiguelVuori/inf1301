@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(1, '../TADtabela/')
 #from dado import *
 from tabela import *
 
@@ -59,25 +61,47 @@ def pnt_pontua(criterio, res):
         for i in range(3):
             if (res[i] == res[i+1] == res[i+2]):
                 quadra = 1
-        if (trinca == 0):
+        if (quadra == 0):
             print("Critério Quadra não aceito")
             return False
         else:
             for i in range(5):
                 pontos += res[i]
     elif (criterio == 'Full House'):
-        pontos = 0
+        tmp = res
+        for i in range(len(res)):
+            if tmp.count(i) == 3:
+                tmp[:] = (value for value in tmp if value != i)
+                if tmp.count(tmp[0]) == 2:
+                    pontos += 25
+                else:
+                    return False
+            elif tmp.count(i) == 2:
+                tmp[:] = (value for value in tmp if value != i)
+                if tmp.count(tmp[0]) == 3:
+                    pontos += 25
+                else:
+                    return False
     elif (criterio == 'Sequência Mínima'):
-        pontos = 0
+        res.sort()
+        count = 0
+        for i in range(0,4):
+            if res[i+1] == res[i] + 1:
+                count += 1
+            if count == 3:
+                pontos += 30
+        if count < 3:
+            return False
     elif (criterio == 'Sequência Máxima'):
         res.sort()
-        for i in range(4):
-            if res[i] != res[i+1]+1:
-                print("Critério Sequência Máximo não aceito")
-                return False
-            else:
-                pontos += res[i]
-        pontos += res[4]
+        count = 0
+        for i in range(0,4):
+            if res[i+1] == res[i] + 1:
+                count += 1
+            if count == 4:
+                pontos += 40
+        if count < 4:
+            return False
     elif (criterio == 'YAHTZEE'):
         soma = 0
         for i in range(len(res)):

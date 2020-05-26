@@ -1,5 +1,9 @@
+import sys
+sys.path.insert(1, 'TADpontuacao/')
+sys.path.insert(1, 'TADtabela/')
 from dado import *
 from pontuacao import *
+from tabela import *
 from utils import *
 
 __all__ = ['cria_jogo', 'inicia_jogo', 'termina_jogo', 'inicia_vez', 'termina_vez']
@@ -8,22 +12,36 @@ __all__ = ['cria_jogo', 'inicia_jogo', 'termina_jogo', 'inicia_vez', 'termina_ve
 
 def init():
     global jogadores
-    global tabela
-    tabela = {'Um': [False, 0], 'Dois': [False, 0], 'Três': [False, 0], 'Quatro': [False, 0], 'Cinco': [False, 0], 'Seis': [False, 0],
-    'Total Seção Superior': 0, 'Bônus': False, 'Trinca': [False, 0], 'Quadra': [False, 0], 'Full House': [False, 0], 'Sequência Mínimo': [False, 0],
-    'Sequência Máxima': [False, 0], 'YAHTZEE': False, 'Chance': [False, 0], 'Bônus Yahtzee': 0, 'Total Seção Inferior': 0} 
-    
+    global tabela_Y
+    tabela_Y = {
+        "Um": 0,
+        "Dois": 0,
+        "Três": 0,
+        "Quatro": 0,
+        "Cinco": 0,
+        "Seis": 0,
+        "Bônus_sup": 0,
+        "Trinca": 0,
+        "Quadra": 0,
+        "Full House": 0,
+        "Sequência Mínima": 0,
+        'Sequência Máxima': 0,
+        "YAHTZEE": 0,
+        "Bônus_YAHTZEE": [0,0,0],
+        "Total": 0
+    }
 def cria_jogo():
     print("\nUse 'quit' como input para terminar o jogo\n")
     n_jogadores = input_handler(input("Número de jogadores: "), int)
     for n in range (0, n_jogadores):
         id = n + 1
+        
         nome = input_handler(input("Nome do jogador %d: " % id), str)
         jogadores[id] = {
-            'nome': nome,
-            'tabela': tabela
-            #'pontuacao' : 0
+            'nome': nome
         }
+        tab_ins(nome,tabela_Y)
+
 
 def inicia_jogo():
         rodada = 1
@@ -62,22 +80,24 @@ def inicia_vez(jogador):
                 d_escolhidos = (input_handler(input(
                     "Escolha quais dados quer relancar separados por espaco ou digite 0 para terminar acao: "), str)).split()
                 if d_escolhidos[0] == '0':
-                    atualiza_pontuacao(jogador, dados)
+                    categoria = input_handler(input("Escolha a categoria de pontuacao: "), str)
+                    pontos = pnt_pontua(categoria, dados)
+                    pnt_atualiza_pontuacao(jogador["nome"], categoria, pontos)
                     return
                 else:
                     novos_val = joga_dado(len(d_escolhidos))
-
                     for numbers in d_escolhidos:
-                        d_escolhidos[j] = int(numbers)
-                        dados[d_escolhidos[j]] = novos_val[j]]
+                        d_escolhidos[j] = int(numbers) - 1
+                        dados[d_escolhidos[j]] = novos_val[j]
                         j = j + 1
-                        
-        categoria = input_handler(input("Escolha a categoria de pontucao: "), str)
-        pontua(categoria,dados)
+        print(dados)
+        categoria = input_handler(input("Escolha a categoria de pontuacao: "), str)
+        pontos = pnt_pontua(categoria,dados)
+        pnt_atualiza_pontuacao(jogador["nome"], categoria, pontos)
 
 
 def termina_vez(jogador):
-    mostra_tabela(jogador)
+    tab_print()
     print("".center(48, "-"))
 
 jogadores = {}
