@@ -65,8 +65,8 @@ def inicia_vez(jogador):
         print("\n\n")
         print(" VEZ DO JOGADOR %s ".center(48, "-") % jogador["nome"].upper())
 
-        for i in range(3):
         dados = []
+        for i in range(3):
 
             if i == 0:
                 dados = joga_dado(5)
