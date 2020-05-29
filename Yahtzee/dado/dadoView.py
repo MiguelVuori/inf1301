@@ -118,6 +118,3 @@ def inicia_view():
 
     root.mainloop()
 
-    return dadoController.pega_dados()
-
-
