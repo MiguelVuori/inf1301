@@ -69,20 +69,20 @@ def pnt_pontua(criterio, res):
                 pontos += res[i]
     elif (criterio == 'Full House'):
         tmp = res
-        for i in range(len(res)):
-            if tmp.count(i) == 3:
-                tmp[:] = (value for value in tmp if value != i)
-                print(tmp)
-                if tmp.count(tmp[0]) == 2:
-                    pontos += 25
-                else:
-                    return False
-            if tmp.count(i) == 2:
-                tmp[:] = (value for value in tmp if value != i)
-                if tmp.count(tmp[0]) == 3:
-                    pontos += 25
-                else:
-                    return False
+        if tmp.count(tmp[0]) == 3:
+            tmp[:] = (value for value in tmp if value != tmp[0])
+            if tmp.count(tmp[0]) == 2:
+                pontos += 25
+            else:
+                return False
+        elif tmp.count(tmp[0] == 2):
+            tmp[:] = (value for value in tmp if value != tmp[0])
+            if tmp.count(tmp[0]) == 3:
+                pontos += 25
+            else:
+                return False
+        else:
+            return False
     elif (criterio == 'Sequência Mínima'):
         res.sort()
         count = 0

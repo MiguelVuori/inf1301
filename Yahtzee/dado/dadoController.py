@@ -11,7 +11,7 @@ class Controller():
     def joga_dados(self):
         if self.model.jogadas == 0:
             self.model.joga_dados([0,1,2,3,4])
-            self.view.atualiza_dados(self.model, [0,1,2,3,4])
+            self.view.joga_dados(self.model, [0,1,2,3,4])
             self.view.redefine_botoes_relancamento()
             self.model.jogadas += 1
         elif self.model.jogadas < 3:
@@ -22,7 +22,7 @@ class Controller():
                     selecionados.append(i)
                 i += 1
             self.model.joga_dados(selecionados)
-            self.view.atualiza_dados(self.model, selecionados)
+            self.view.joga_dados(self.model, selecionados)
             self.model.jogadas += 1
         else:
             self.view.redefine_botoes_termino()

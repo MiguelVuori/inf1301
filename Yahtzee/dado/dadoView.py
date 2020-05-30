@@ -1,4 +1,6 @@
 import tkinter as tk
+from random import randint
+import time
 
 class View(tk.Toplevel):
     def __init__(self, root, model, joga_dados, bloqueia):
@@ -9,7 +11,7 @@ class View(tk.Toplevel):
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
 
-        self.joga_dados = joga_dados
+        self.controller_joga_dados = joga_dados
         self.bloqueia = bloqueia
         # ---- criação do frame
         self.frame = tk.Frame(root)
@@ -28,14 +30,26 @@ class View(tk.Toplevel):
             tk.PhotoImage(file="./dado/img/dado_5.png"),
             tk.PhotoImage(file="./dado/img/dado_6.png")
         ]
+        
+        self.n_loops = 0
 
+    def joga_dados(self, model, lista_de_indices):
+        if self.n_loops < 20:
+            for indice in lista_de_indices:
+                randomico = randint(1,6)
+                mock_dado = self.canvas.create_image(32,32,image=self.imagens_dados[randomico - 1])
+                self.canvas.move(mock_dado, 96*indice, 0)
+            self.n_loops += 1    
+            self.canvas.after(50, lambda model=model, lista_de_indices=lista_de_indices: self.joga_dados(model, lista_de_indices))
+        else:
+            self.n_loops = 0
+            self.atualiza_dados(model, lista_de_indices)
 
     # ---- função para atualizar imagens dos dados
     def atualiza_dados(self, model, lista_de_indices):
         for indice in lista_de_indices:
-            if model.dados[indice]['selected']:
-                model.dados[indice]['selected'] = False
-                model.dados[indice]["rect"] = self.canvas.create_rectangle(model.dados[indice]["x1"], 15, model.dados[indice]["x2"], 48, outline='black')
+            model.dados[indice]['selected'] = False
+            model.dados[indice]["rect"] = self.canvas.create_rectangle(model.dados[indice]["x1"], 15, model.dados[indice]["x2"], 48, outline='black')
             model.dados[indice]['img'] = self.canvas.create_image(32,32,image=self.imagens_dados[model.dados[indice]['dado']-1])
             self.canvas.move(model.dados[indice]['img'], 96*indice, 0)
 
@@ -80,7 +94,7 @@ class View(tk.Toplevel):
 
     # ---- função para redefinir os botões depois do primeiro lançamento de dados
     def define_botoes_inicio(self):
-        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.joga_dados)
+        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
         self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
@@ -89,7 +103,7 @@ class View(tk.Toplevel):
     def redefine_botoes_inicio(self):
         self.botao_joga_dados.destroy()
         self.botao_termina_jogada.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.joga_dados)
+        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
         self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
@@ -97,7 +111,7 @@ class View(tk.Toplevel):
     # ---- função para redefinir os botões depois do primeiro lançamento de dados
     def redefine_botoes_relancamento(self):
         self.botao_joga_dados.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Relançar Dados", command = self.joga_dados)
+        self.botao_joga_dados = tk.Button(self.root, text = "Relançar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
         self.botao_termina_jogada.destroy()
         self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia)
@@ -106,7 +120,7 @@ class View(tk.Toplevel):
     # ---- função para redefinir os botões para só aceitar a finalização da jogada
     def redefine_botoes_termino(self):
         self.botao_joga_dados.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Relançar Dados", command = self.joga_dados, state = 'disabled')
+        self.botao_joga_dados = tk.Button(self.root, text = "Relançar Dados", command = self.controller_joga_dados, state = 'disabled')
         self.botao_joga_dados.grid()
         self.botao_termina_jogada.destroy()
         self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia)
@@ -115,7 +129,7 @@ class View(tk.Toplevel):
     # ---- função para bloquear os botões depois do término da jogada
     def redefine_botoes_bloqueio(self):
         self.botao_joga_dados.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.joga_dados, state = 'disabled')
+        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.controller_joga_dados, state = 'disabled')
         self.botao_joga_dados.grid()
         self.botao_termina_jogada.destroy()
         self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia, state="disabled")
