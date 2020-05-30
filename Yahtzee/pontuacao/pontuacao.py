@@ -72,11 +72,12 @@ def pnt_pontua(criterio, res):
         for i in range(len(res)):
             if tmp.count(i) == 3:
                 tmp[:] = (value for value in tmp if value != i)
+                print(tmp)
                 if tmp.count(tmp[0]) == 2:
                     pontos += 25
                 else:
                     return False
-            elif tmp.count(i) == 2:
+            if tmp.count(i) == 2:
                 tmp[:] = (value for value in tmp if value != i)
                 if tmp.count(tmp[0]) == 3:
                     pontos += 25

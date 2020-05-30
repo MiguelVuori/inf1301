@@ -1,31 +1,43 @@
-import dadoModel, dadoView
+from dadoModel import Model
+from dadoView import View
+import tkinter as tk
 
-def inicia_view():
-    dadoView.inicia_view()
+class Controller():
+    def __init__(self, root):
+        self.model = Model()
+        self.view = View(root, self.model, self.joga_dados, self.bloqueia)
+        self.view.define_botoes_inicio()
 
-def joga_dados():
-    if dadoModel.retries == 0:
-        dados = dadoModel.joga_dados([0,1,2,3,4])
-        dadoView.atualiza_dados([0,1,2,3,4])
-        dadoView.redefine_botoes_relancamento()
-        dadoModel.retries += 1
-    elif dadoModel.retries < 3:
-        dados = pega_dados()
-        selecionados = []
-        i = 0
-        for dado in dados.values():
-            if dado['selected']:
-                selecionados.append(i)
-            i += 1
-        dados = dadoModel.joga_dados(selecionados)
-        dadoView.atualiza_dados(selecionados)
-        dadoModel.retries += 1
-    else:
-        dadoView.redefine_botoes_termino()
-        dadoView.atualiza_dados([0,1,2,3,4])
+    def joga_dados(self):
+        if self.model.jogadas == 0:
+            self.model.joga_dados([0,1,2,3,4])
+            self.view.atualiza_dados(self.model, [0,1,2,3,4])
+            self.view.redefine_botoes_relancamento()
+            self.model.jogadas += 1
+        elif self.model.jogadas < 3:
+            selecionados = []
+            i = 0
+            for dado in self.model.dados.values():
+                if dado['selected']:
+                    selecionados.append(i)
+                i += 1
+            self.model.joga_dados(selecionados)
+            self.view.atualiza_dados(self.model, selecionados)
+            self.model.jogadas += 1
+        else:
+            self.view.redefine_botoes_termino()
+            self.view.atualiza_dados(self.model, [0,1,2,3,4])
 
-def pega_dados():
-    return dadoModel.pega_dados()
+    def retorna_dados(self):
+        return self.model.pega_dados_int()
+    
+    def retorna_bloqueado(self):
+        return self.model.bloqueado
 
-def finaliza_dados():
-    return(pega_dados(),exit(0))
+    def bloqueia(self):
+        self.model.bloqueado = True
+        self.view.redefine_botoes_bloqueio()
+
+    def reinicia(self):
+        self.model.redefine_model()
+        self.view.reinicia()
