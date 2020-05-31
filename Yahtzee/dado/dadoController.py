@@ -24,9 +24,9 @@ class Controller():
             self.model.joga_dados(selecionados)
             self.view.joga_dados(self.model, selecionados)
             self.model.jogadas += 1
-        else:
-            self.view.redefine_botoes_termino()
-            self.view.atualiza_dados(self.model, [0,1,2,3,4])
+            if self.model.jogadas == 3:
+                self.view.redefine_botoes_termino()
+                self.view.atualiza_dados(self.model, [0,1,2,3,4])
 
     def retorna_dados(self):
         return self.model.pega_dados_int()
