@@ -2,7 +2,7 @@ from dadoModel import Model
 from dadoView import View
 import tkinter as tk
 
-class Controller():
+class Dado():
     def __init__(self, root):
         self.model = Model()
         self.view = View(root, self.model, self.joga_dados, self.bloqueia)
