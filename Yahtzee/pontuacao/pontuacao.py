@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(1, '../TADtabela/')
+sys.path.insert(1, '../tabela/')
 #from dado import *
 from tabela import *
 
@@ -75,7 +75,7 @@ def pnt_pontua(criterio, res):
                 pontos += 25
             else:
                 return False
-        elif tmp.count(tmp[0] == 2):
+        elif tmp.count(tmp[0]) == 2:
             tmp[:] = (value for value in tmp if value != tmp[0])
             if tmp.count(tmp[0]) == 3:
                 pontos += 25
