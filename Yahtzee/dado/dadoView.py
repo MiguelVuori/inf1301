@@ -5,7 +5,7 @@ import time
 class View():
     def __init__(self, root, model, joga_dados, bloqueia):
         self.root = root
-        self.root.geometry("450x200")
+        self.root.geometry("450x220")
         self.root.title("Dados")
         self.root.configure(background='black')
         self.root.grid_rowconfigure(0, weight=1)
@@ -32,7 +32,8 @@ class View():
             tk.PhotoImage(file="./dado/img/dado_5.png"),
             tk.PhotoImage(file="./dado/img/dado_6.png")
         ]
-        
+
+        self.label_relancamentos = self.label_relancamentos = tk.Label(self.root, bg="black", fg="white", text="")
         self.n_loops = 0
 
     def joga_dados(self, model, lista_de_indices):
@@ -96,46 +97,52 @@ class View():
 
     # ---- função para redefinir os botões depois do primeiro lançamento de dados
     def define_botoes_inicio(self):
-        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.controller_joga_dados)
+        self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Jogar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
-        self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia, state="disabled")
+        self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
 
     # ---- função para redefinir os botões depois do término da jogada 
     def redefine_botoes_inicio(self):
         self.botao_joga_dados.destroy()
         self.botao_termina_jogada.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.controller_joga_dados)
+        self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Jogar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
-        self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia, state="disabled")
+        self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
+        self.redefine_label_relancamento(0)
 
     # ---- função para redefinir os botões depois do primeiro lançamento de dados
     def redefine_botoes_relancamento(self):
         self.botao_joga_dados.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Relançar Dados", command = self.controller_joga_dados)
-        self.botao_joga_dados.grid()
         self.botao_termina_jogada.destroy()
-        self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia)
+        self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Relançar Dados", command = self.controller_joga_dados)
+        self.botao_joga_dados.grid()
+        self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia)
         self.botao_termina_jogada.grid()
 
     # ---- função para redefinir os botões para só aceitar a finalização da jogada
     def redefine_botoes_termino(self):
         self.botao_joga_dados.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Relançar Dados", command = self.controller_joga_dados, state = 'disabled')
-        self.botao_joga_dados.grid()
         self.botao_termina_jogada.destroy()
-        self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia)
+        self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Relançar Dados", command = self.controller_joga_dados, state = 'disabled')
+        self.botao_joga_dados.grid()
+        self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia)
         self.botao_termina_jogada.grid()
 
     # ---- função para bloquear os botões depois do término da jogada
     def redefine_botoes_bloqueio(self):
         self.botao_joga_dados.destroy()
-        self.botao_joga_dados = tk.Button(self.root, text = "Jogar Dados", command = self.controller_joga_dados, state = 'disabled')
-        self.botao_joga_dados.grid()
         self.botao_termina_jogada.destroy()
-        self.botao_termina_jogada = tk.Button(self.root, text = "Terminar Jogada", command = self.bloqueia, state="disabled")
+        self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Jogar Dados", command = self.controller_joga_dados, state = 'disabled')
+        self.botao_joga_dados.grid()
+        self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
+
+    def redefine_label_relancamento(self, jogadas):
+        self.label_relancamentos.destroy()
+        self.label_relancamentos = tk.Label(self.root, bg="black", fg="white", text="Lançamentos: {}".format(jogadas))
+        self.label_relancamentos.grid(sticky="w")
 
     def reinicia(self):
         self.canvas.delete("all")
