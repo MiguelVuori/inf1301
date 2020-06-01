@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class ViewSuperior():
+class View():
     def __init__(self, root, tabela):
         self.root = root
         self.root.geometry("650x325")
@@ -17,6 +17,13 @@ class ViewSuperior():
             ["BÔNUS (se pontuação for 63 ou mais)", " MARQUE 35", "", "", "", "", "", ""],
             ["TOTAL (Da seção superior)", "------------->", "", "", "", "", "", ""]
         ]
+    
+    def update(self):
+        for i in range(12):
+            for j in range(8):
+                if(j > 1 and i > 0):
+                        layout[i][j] = self.tabela.get(lst[i][0])
+
     def mostra(self):
         height = 10
         width = 8

@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class ViewInferior():
+class View():
     def __init__(self, root, tabela):
         self.root = root
         self.root.geometry("700x400")
@@ -19,6 +19,13 @@ class ViewInferior():
         ["TOTAL (da seção superior)", "------------->", "", "", "", "", "", ""],
         ["TOTAL GERAL", "------------->", "", "", "", "", "", ""],
     ]
+
+    def update(self):
+        for i in range(12):
+            for j in range(8):
+                if(j > 1 and i > 0):
+                        layout[i][j] = self.tabela.get(lst[i][0])
+
     def mostra(self):
         height = 12
         width = 8

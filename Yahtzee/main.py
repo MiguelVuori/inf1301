@@ -7,6 +7,7 @@ sys.path.insert(1, 'tabela/')
 import tkinter as tk
 from dadoController import Dado
 from pontuacao import *
+from tabelaModel import Tabela
 from tabelaSuperiorController import TabelaSuperior
 from tabelaInferiorController import TabelaInferior
 
@@ -26,8 +27,9 @@ def trataNome(enNome):
 
 def add_player(nome):
     global Tabelas_Superiores
-
-    Todas_Tabelas.append([TabelaSuperior(tk.Toplevel(),nome),TabelaInferior(tk.Toplevel())])
+    #messagebox.showinfo("Inclusão Efetuada")
+    objetoJogador = Tabela(nome)
+    Todas_Tabelas.append([nome , TabelaSuperior(tk.Toplevel(), objetoJogador), TabelaInferior(tk.Toplevel(), objetoJogador)])
 
 def joga_dados():
     global dado
