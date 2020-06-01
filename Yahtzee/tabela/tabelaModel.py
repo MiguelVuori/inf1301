@@ -56,7 +56,7 @@ class Tabela():
         soma = 0
 
         for campo in self.tabela:
-            if campo == not in indesejados:
+            if campo not in indesejados:
                 soma += self.tabela[campo]
         return soma
 
