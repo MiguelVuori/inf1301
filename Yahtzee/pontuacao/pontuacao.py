@@ -111,7 +111,7 @@ def pnt_pontua(criterio, res):
             print("Critério YAHTZEE não aceito")
             return False
         else:
-            pontos = soma
+            pontos = 50
     elif (criterio == 'Chance'):
         for i in range(5):
             pontos += res[i]  

@@ -17,7 +17,8 @@ def checa_termino_jogada():
     root.after(250, checa_termino_jogada)
 
 root = tk.Tk()
-dado = Dado(root)
+
+dado = Dado(tk.Toplevel())
 
 root.after(250, checa_termino_jogada)
 root.mainloop()
