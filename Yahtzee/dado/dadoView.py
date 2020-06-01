@@ -2,7 +2,7 @@ import tkinter as tk
 from random import randint
 import time
 
-class View(tk.Toplevel):
+class View():
     def __init__(self, root, model, joga_dados, bloqueia):
         self.root = root
         self.root.geometry("450x200")
@@ -16,9 +16,11 @@ class View(tk.Toplevel):
         # ---- criação do frame
         self.frame = tk.Frame(root)
         self.frame.grid()
+
         # ---- criação do canvas
         self.canvas = tk.Canvas(self.frame, bg="black", width=448, height=64)
         self.canvas.grid()
+        
         # ---- bind do clique à função seleciona_dados
         self.canvas.bind("<Button-1>", lambda event, model=model: self.seleciona_dados(event, model))
         # ---- criação de dicionário com imagens de cada dado
