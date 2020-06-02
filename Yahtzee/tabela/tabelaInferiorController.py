@@ -1,5 +1,5 @@
 from tabelaModel import Tabela
-from tabelaInferiorView import ViewInferior
+from tabelaInferiorView import View
 
 class TabelaInferior():
     def __init__(self, root, tabela):
@@ -8,9 +8,9 @@ class TabelaInferior():
     
     
     def display(self):
-        self.view = ViewInferior(self.root, self.tabela)
-        self.view.mostra()
-
-    def redisplay(self):
+        self.view = View(self.root, self.tabela)
         self.view.update()
         self.view.mostra()
+
+   #def redisplay(self): caso a gente queira fazer atualização enquanto a tabela estiver aberta a gente faz por aqui
+    #

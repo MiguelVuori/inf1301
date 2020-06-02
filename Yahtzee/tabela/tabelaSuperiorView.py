@@ -5,6 +5,7 @@ class View():
         self.root = root
         self.root.geometry("650x325")
         self.root.title("Seção Superior")
+        self.tabela = tabela
         self.layout = [
             ["SEÇÃO SUPERIOR", "COMO PONTUAR", "JOGO #1", "JOGO #2", "JOGO #3", "JOGO #4", "JOGO #5", "JOGO #6"],
             ["Um", "Marque a soma dos valores dos dados com o nº 1", "", "", "", "", "", ""],
@@ -19,10 +20,13 @@ class View():
         ]
     
     def update(self):
-        for i in range(12):
+        for i in range(10):
             for j in range(8):
                 if(j > 1 and i > 0):
-                        layout[i][j] = self.tabela.get(lst[i][0])
+                    if (i == 8):
+                        self.layout[i][j] = self.tabela.get("Bônus_sup")
+                    else:
+                        self.layout[i][j] = self.tabela.get(self.layout[i][0])
 
     def mostra(self):
         height = 10

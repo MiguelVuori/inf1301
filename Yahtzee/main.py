@@ -27,17 +27,24 @@ def trataNome(enNome):
 
 def add_player(nome):
     global Tabelas_Superiores
-    #messagebox.showinfo("Inclusão Efetuada")
     objetoJogador = Tabela(nome)
-    Todas_Tabelas.append([nome , TabelaSuperior(tk.Toplevel(), objetoJogador), TabelaInferior(tk.Toplevel(), objetoJogador)])
+    Todas_Tabelas.append([nome, objetoJogador])
 
 def joga_dados():
     global dado
     dadoToplevel = tk.Toplevel()
     dado = Dado(dadoToplevel)
 
+
 def mostra_tabela():
-    pass
+    for vet in Todas_Tabelas:
+        if True:
+            objetoJogador = vet[1]
+    upper = TabelaSuperior(tk.Toplevel(), objetoJogador)
+    lower = TabelaInferior(tk.Toplevel(), objetoJogador)
+    upper.display()
+    lower.display()
+    
 
 def fecha_Cadastro(root):
     root.destroy()

@@ -1,5 +1,5 @@
 from tabelaModel import Tabela
-from tabelaSuperiorView import ViewSuperior
+from tabelaSuperiorView import View
 
 
 class TabelaSuperior():
@@ -9,10 +9,10 @@ class TabelaSuperior():
 
     
     def display(self):
-        self.view = ViewSuperior(self.root, self.tabela)
-        self.view.mostra()
-
-    def redisplay(self):
+        self.view = View(self.root, self.tabela)
         self.view.update()
         self.view.mostra()
+
+    #def redisplay(self): caso a gente queira fazer atualização enquanto a tabela estiver aberta a gente faz por aqui
+    #    
 

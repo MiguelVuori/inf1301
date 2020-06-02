@@ -5,6 +5,7 @@ class View():
         self.root = root
         self.root.geometry("700x400")
         self.root.title("Seção Inferior")
+        self.tabela = tabela
         self.layout = [
         ["SEÇÃO INFERIOR","COMO PONTUAR", "JOGO #1", "JOGO #2", "JOGO #3", "JOGO #4", "JOGO #5", "JOGO #6"],
         ["Trinca", "Adicione o Total dos 5 dados", "", "", "", "", "", ""],
@@ -24,7 +25,16 @@ class View():
         for i in range(12):
             for j in range(8):
                 if(j > 1 and i > 0):
-                        layout[i][j] = self.tabela.get(lst[i][0])
+                    if (i == 8):
+                        lis = self.tabela.get(self.layout[i][0])
+                        self.layout[i][j] = ' '.join([str(elem) for elem in lis])
+                    elif (i == 6):
+                        self.layout[i][j] = self.tabela.get("YAHTZEE")
+                    else:
+                        self.layout[i][j] = self.tabela.get(self.layout[i][0])
+                        
+
+
 
     def mostra(self):
         height = 12
