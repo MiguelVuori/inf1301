@@ -34,6 +34,7 @@ def joga_dados():
     global dado
     dadoToplevel = tk.Toplevel()
     dado = Dado(dadoToplevel)
+    root.after(250, checa_termino_jogada)
 
 
 def mostra_tabela():
@@ -72,12 +73,20 @@ def fecha_Cadastro(root):
 def checa_termino_jogada():
     if dado.retorna_bloqueado():
         dados = dado.retorna_dados()
-        categoria = input("Escolha a categoria de pontuacao: ")
-        pontos = pnt_pontua(categoria,dados)
+        dropdown_root = tk.Toplevel()
+        dropdown_root.geometry("150x100")
+        dropdown_root.title("Critério")
+        criterio_escolhido = tk.StringVar(dropdown_root)
+        criterio_escolhido.set(criterios[0])
+        dropdown_text = tk.Label(dropdown_root, text="Escolha um critério").pack()
+        dropdown = tk.OptionMenu(dropdown_root, criterio_escolhido, *criterios).pack()
+        dropdown_button = tk.Button(dropdown_root, text="Confirmar", command=dropdown_root.destroy).pack()
+        dropdown_root.wait_window(dropdown_root)
+        pontos = pnt_pontua(criterio_escolhido.get(), dados) # ---- AQUI PONTUA ----
+        print(pontos)
         dado.reinicia()
 
     root.after(250, checa_termino_jogada)
-
 # ---- Inicialização das Janelas -----
 
 root = tk.Tk()
@@ -119,5 +128,4 @@ btContinua.config(command = lambda: fecha_Cadastro(root))
 #tabelaSuperior = TabelaSuperior(tabelaSuperiorToplevel)
 
 
-root.after(250, checa_termino_jogada)
 root.mainloop()
