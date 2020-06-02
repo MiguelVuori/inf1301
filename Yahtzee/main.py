@@ -14,7 +14,21 @@ from tabelaInferiorController import TabelaInferior
 # ----- Variaveis Globais -----
 
 Todas_Tabelas = []
-dado = None
+criterios = [
+    "Um",
+    "Dois",
+    "Três",
+    "Quatro",
+    "Cinco",
+    "Seis",
+    "Trinca",
+    "Quadra",
+    "Full House",
+    "Sequência Mínima",
+    'Sequência Máxima',
+    "YAHTZEE",
+    "Chance"
+]
 
 # ----- Funções de callback -----
 def trataNome(enNome):
