@@ -30,26 +30,44 @@ def trataNome(enNome):
 def add_player(nome):
     global n_jogadores
     global criterios_jogador
-    n_jogadores += 1
-    objetoJogador = Tabela(nome)
-    Todas_Tabelas.append([nome, 
-                          objetoJogador,
-                          [
-                            "Um",
-                            "Dois",
-                            "Três",
-                            "Quatro",
-                            "Cinco",
-                            "Seis",
-                            "Trinca",
-                            "Quadra",
-                            "Full House",
-                            "Sequência Mínima",
-                            'Sequência Máxima',
-                            "YAHTZEE",
-                            "Chance"
-                            ]
-                        ])
+    if(n_jogadores < 6):
+
+        n_jogadores += 1
+        objetoJogador = Tabela(nome)
+        Todas_Tabelas.append([nome, 
+                            objetoJogador,
+                            [
+                                "Um",
+                                "Dois",
+                                "Três",
+                                "Quatro",
+                                "Cinco",
+                                "Seis",
+                                "Trinca",
+                                "Quadra",
+                                "Full House",
+                                "Sequência Mínima",
+                                'Sequência Máxima',
+                                "YAHTZEE",
+                                "Chance"
+                                ]
+                            ])
+        registro_root = tk.Toplevel()
+        registro_root.geometry("300x100")
+        registro_root.title("Registro")
+        label = tk.Label(registro_root, text="Jogador adicionado!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(registro_root, text="Fechar", command=registro_root.destroy)
+        button_close.pack(fill='x', pady=10)
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Número máximo de jogadores atingido!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+
 
 def joga_dados():
     global dado
@@ -80,28 +98,37 @@ def mostra_tabela(jogador):
     
 
 def fecha_Cadastro(root):
-    root.destroy()
-    root = tk.Tk()
-    root.geometry("400x400")
-    root.title("Yahtzee")
+    if (n_jogadores >= 2):
+        root.destroy()
+        root = tk.Tk()
+        root.geometry("400x400")
+        root.title("Yahtzee")
 
-    # ----- Label exibindo nome e rodada atual -----
-    string_jogador = "Jogador atual: {0}".format(Todas_Tabelas[jogador_atual][0])
-    string_rodada = "Rodada: {0}".format(rodada)
-    label_jogador = tk.Label(root, text=string_jogador).pack()
-    label_rodada = tk.Label(root, text=string_rodada).pack()
+        # ----- Label exibindo nome e rodada atual -----
+        string_jogador = "Jogador atual: {0}".format(Todas_Tabelas[jogador_atual][0])
+        string_rodada = "Rodada: {0}".format(rodada)
+        label_jogador = tk.Label(root, text=string_jogador).pack()
+        label_rodada = tk.Label(root, text=string_rodada).pack()
 
-    # ----- Criação do botão de jogar dado -----
+        # ----- Criação do botão de jogar dado -----
 
-    btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
-    btJogaDado.place(x = 135, y = 200)
-    btJogaDado.config(command = lambda: joga_dados())
+        btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
+        btJogaDado.place(x = 135, y = 200)
+        btJogaDado.config(command = lambda: joga_dados())
 
-    # ----- Ver tabela -----
+        # ----- Ver tabela -----
 
-    btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
-    btTabela.place(x = 135, y = 175)
-    btTabela.config(command = lambda: mostra_tabela(jogador_atual))
+        btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
+        btTabela.place(x = 135, y = 175)
+        btTabela.config(command = lambda: mostra_tabela(jogador_atual))
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Necessário no mínimo dois jogadores!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
 
 
 
