@@ -95,9 +95,19 @@ def passa_vez(root):
 
 def joga_dados():
     global dado
-    dadoToplevel = tk.Toplevel()
-    dado = Dado(dadoToplevel)
-    root.after(250, checa_termino_jogada)
+    if jogou == True:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Já jogou nessa rodada")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+        return
+    else:
+        dadoToplevel = tk.Toplevel()
+        dado = Dado(dadoToplevel)
+        root.after(250, checa_termino_jogada)
 
 
 def mostra_tabela(jogador):
@@ -281,9 +291,10 @@ def checa_termino_jogada():
         Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, rodada)
         Todas_Tabelas[jogador_atual][2].remove(escolhido)
         return
-        #dado.reinicia()
 
     root.after(250, checa_termino_jogada)
+
+
 # ---- Inicialização das Janelas -----
 
 root = tk.Tk()
