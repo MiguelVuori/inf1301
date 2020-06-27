@@ -4,6 +4,7 @@ sys.path.insert(1, 'dado/')
 sys.path.insert(1, 'pontuacao/')
 sys.path.insert(1, 'tabela/')
 
+import random
 import tkinter as tk
 from dadoController import Dado
 from pontuacao import *
@@ -17,6 +18,7 @@ Todas_Tabelas = []
 rodada = 0
 jogador_atual = 0
 n_jogadores = 0
+jogou = False
 
 # ----- Funções de callback -----
 def trataNome(enNome):
@@ -52,6 +54,7 @@ def add_player(nome):
                                 "Chance"
                                 ]
                             ])
+    # ----- Popup de aviso de cadastro -----
         registro_root = tk.Toplevel()
         registro_root.geometry("300x100")
         registro_root.title("Registro")
@@ -59,6 +62,7 @@ def add_player(nome):
         label.pack(fill='x', padx=50, pady=5)
         button_close = tk.Button(registro_root, text="Fechar", command=registro_root.destroy)
         button_close.pack(fill='x', pady=10)
+    
     else:
         error_message_root = tk.Toplevel()
         error_message_root.geometry("400x100")
@@ -68,6 +72,24 @@ def add_player(nome):
         button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
         button_close.pack(fill='x', pady=10)
 
+def passa_vez(root):
+    global jogador_atual
+    global rodada
+    global jogou
+    if jogou == False:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Você precisa pontuar antes de passar a vez!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+    else:
+        if jogador_atual + 1 == n_jogadores:
+            rodada += 1
+        jogador_atual = (jogador_atual + 1) % n_jogadores
+        jogou = False
+        menu_jogador(root)
 
 def joga_dados():
     global dado
@@ -97,30 +119,53 @@ def mostra_tabela(jogador):
     lower.display()
     
 
+def menu_jogador(root):
+    root.destroy()
+    root = tk.Tk()
+    root.geometry("400x400")
+    root.title("Yahtzee")
+
+    # ----- Label exibindo nome e rodada atual -----
+    string_jogador = "Jogador atual: {0}".format(Todas_Tabelas[jogador_atual][0])
+    string_rodada = "Rodada: {0}".format(rodada)
+    label_jogador = tk.Label(root, text=string_jogador).pack()
+    label_rodada = tk.Label(root, text=string_rodada).pack()
+    
+
+    # ----- Criação do botão de jogar dado -----
+    btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
+    btJogaDado.place(x = 135, y = 200)
+    btJogaDado.config(command = lambda: joga_dados())
+
+    # ----- Ver tabela -----
+    btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
+    btTabela.place(x = 135, y = 175)
+    btTabela.config(command = lambda: mostra_tabela(jogador_atual))
+
+    # ----- Passar a vez -----
+    btPassaVez = tk.Button(root, text = "Passar a Vez", width = 15)
+    btPassaVez.place(x = 135, y = 150)
+    btPassaVez.config(command = lambda: passa_vez(root))
+
+
 def fecha_Cadastro(root):
+    global Todas_Tabelas
+    nomes = ''
+    n = 1
     if (n_jogadores >= 2):
-        root.destroy()
-        root = tk.Tk()
-        root.geometry("400x400")
-        root.title("Yahtzee")
-
-        # ----- Label exibindo nome e rodada atual -----
-        string_jogador = "Jogador atual: {0}".format(Todas_Tabelas[jogador_atual][0])
-        string_rodada = "Rodada: {0}".format(rodada)
-        label_jogador = tk.Label(root, text=string_jogador).pack()
-        label_rodada = tk.Label(root, text=string_rodada).pack()
-
-        # ----- Criação do botão de jogar dado -----
-
-        btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
-        btJogaDado.place(x = 135, y = 200)
-        btJogaDado.config(command = lambda: joga_dados())
-
-        # ----- Ver tabela -----
-
-        btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
-        btTabela.place(x = 135, y = 175)
-        btTabela.config(command = lambda: mostra_tabela(jogador_atual))
+        random.shuffle(Todas_Tabelas)
+        for tabela in Todas_Tabelas:
+            nomes += "%d. "%n + tabela[0] + "\n"
+            n += 1
+        sorteio_root = tk.Toplevel()
+        sorteio_root.geometry("400x300")
+        sorteio_root.title("Sorteio das vezes")
+        label = tk.Label(sorteio_root, text=nomes)
+        label.pack(fill='x', padx=50, pady=5)
+        btInicia = tk.Button(sorteio_root, text = "Iniciar jogo", width = 15)
+        btInicia.pack(fill='x', pady=10)
+        btInicia.config(command = lambda: menu_jogador(root))
+    
     else:
         error_message_root = tk.Toplevel()
         error_message_root.geometry("400x100")
@@ -139,7 +184,9 @@ def checa_termino_jogada():
     global rodada
     global criterios_jogador
     global jogador_atual
+    global jogou
     if dado.retorna_bloqueado():
+        jogou = True
         dados = dado.retorna_dados()
         dropdown_root = tk.Toplevel()
         dropdown_root.geometry("175x100")
@@ -154,14 +201,8 @@ def checa_termino_jogada():
         pontos = pnt_pontua(escolhido, dados)
         Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, rodada)
         Todas_Tabelas[jogador_atual][2].remove(escolhido)
-        dado.reinicia()
-        if jogador_atual < n_jogadores - 1:
-            jogador_atual += 1
-        elif jogador_atual == n_jogadores - 1:
-            rodada += 1
-            jogador_atual = 0
-        if rodada == 5:
-            pass # termina a partida
+        return
+        #dado.reinicia()
 
     root.after(250, checa_termino_jogada)
 # ---- Inicialização das Janelas -----
