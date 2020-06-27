@@ -29,6 +29,7 @@ criterios = [
     "YAHTZEE",
     "Chance"
 ]
+rodada = 0
 
 # ----- Funções de callback -----
 def trataNome(enNome):
@@ -69,7 +70,7 @@ def fecha_Cadastro(root):
 
     # ----- Criação do botão de jogar dado -----
 
-    btJogaDado = tk.Button(root, text = "Rola os Dados", width = 15)
+    btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
     btJogaDado.place(x = 135, y = 200)
     btJogaDado.config(command = lambda: joga_dados())
 
@@ -85,10 +86,11 @@ def fecha_Cadastro(root):
 # ----- Fim das funcoes de callback -----
 
 def checa_termino_jogada():
+    global rodada
     if dado.retorna_bloqueado():
         dados = dado.retorna_dados()
         dropdown_root = tk.Toplevel()
-        dropdown_root.geometry("150x100")
+        dropdown_root.geometry("175x100")
         dropdown_root.title("Critério")
         criterio_escolhido = tk.StringVar(dropdown_root)
         criterio_escolhido.set(criterios[0])
@@ -96,19 +98,17 @@ def checa_termino_jogada():
         dropdown = tk.OptionMenu(dropdown_root, criterio_escolhido, *criterios).pack()
         dropdown_button = tk.Button(dropdown_root, text="Confirmar", command=dropdown_root.destroy).pack()
         dropdown_root.wait_window(dropdown_root)
-        pontos = pnt_pontua(criterio_escolhido.get(), dados) # ---- AQUI PONTUA ----
-        print(pontos)
+        escolhido = criterio_escolhido.get()
+        pontos = pnt_pontua(escolhido, dados)
+        Todas_Tabelas[0][1].insere(escolhido, pontos, rodada) # trocar os indices aqui
+        criterios.remove(escolhido)
         dado.reinicia()
+        rodada += 1
 
     root.after(250, checa_termino_jogada)
 # ---- Inicialização das Janelas -----
 
 root = tk.Tk()
-
-#dadoToplevel = tk.Toplevel()
-#tabelaInferiorToplevel = tk.Toplevel()
-#tabelaSuperiorToplevel = tk.Toplevel()
-
 
 # ----- Criação da janela -----
 root.geometry("400x400")
@@ -137,9 +137,6 @@ btContinua.config(command = lambda: fecha_Cadastro(root))
 
 # ----- Fim da criação do cadastro -----
 
-#dado = Dado(dadoToplevel)
-#tabelaInferior = TabelaInferior(tabelaInferiorToplevel)
-#tabelaSuperior = TabelaSuperior(tabelaSuperiorToplevel)
 
 
 root.mainloop()

@@ -26,16 +26,13 @@ class View():
             for j in range(8):
                 if(j > 1 and i > 0):
                     if (i == 8):
-                        lis = self.tabela.get(self.layout[i][0])
+                        lis = self.tabela.get(self.layout[i][0], j - 2)
                         self.layout[i][j] = ' '.join([str(elem) for elem in lis])
                     elif (i == 6):
-                        self.layout[i][j] = self.tabela.get("YAHTZEE")
+                        self.layout[i][j] = self.tabela.get("YAHTZEE", j - 2)
                     else:
-                        self.layout[i][j] = self.tabela.get(self.layout[i][0])
+                        self.layout[i][j] = self.tabela.get(self.layout[i][0], j - 2)
                         
-
-
-
     def mostra(self):
         height = 12
         width = 8

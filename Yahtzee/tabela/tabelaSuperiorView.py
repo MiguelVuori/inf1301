@@ -24,9 +24,9 @@ class View():
             for j in range(8):
                 if(j > 1 and i > 0):
                     if (i == 8):
-                        self.layout[i][j] = self.tabela.get("Bônus_sup")
+                        self.layout[i][j] = self.tabela.get("Bônus_sup", j - 2)
                     else:
-                        self.layout[i][j] = self.tabela.get(self.layout[i][0])
+                        self.layout[i][j] = self.tabela.get(self.layout[i][0], j - 2)
 
     def mostra(self):
         height = 10
