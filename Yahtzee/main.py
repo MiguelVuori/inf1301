@@ -6,11 +6,13 @@ sys.path.insert(1, 'tabela/')
 
 import random
 import tkinter as tk
+from tkinter import filedialog
 from dadoController import Dado
 from pontuacao import *
 from tabelaModel import Tabela
 from tabelaSuperiorController import TabelaSuperior
 from tabelaInferiorController import TabelaInferior
+from json import *
 
 # ----- Variaveis Globais -----
 
@@ -175,7 +177,84 @@ def fecha_Cadastro(root):
         button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
         button_close.pack(fill='x', pady=10)
 
+def novo_jogo():
+    global btNovo
+    global btCarrega
 
+    btNovo.destroy()
+    btCarrega.destroy()
+
+    # ----- Entrada dos nomes -----
+
+    lbNome = tk.Label(root, text = "Nome", width = 12 , anchor = "w")
+    lbNome.place(x = 10, y = 50)
+    enNome = tk.Entry(root, width = 10)
+    enNome.focus_set()
+    enNome.config(validate = "focusout", validatecommand = lambda: trataNome(enNome))
+    enNome.place(x = 75, y = 50)
+
+    # ----- Criação do botão de inclusão -----
+
+    btInclui = tk.Button(root, text = "Incluir", width = 15)
+    btInclui.place(x = 50, y = 350)
+    btInclui.config(command = lambda: add_player(enNome.get()))
+
+    # ----- Criação do botão de finalizar cadastro e continuar para o jogo-----
+
+    btContinua = tk.Button(root, text = "Continuar", width = 15)
+    btContinua.place(x = 200, y = 350)
+    btContinua.config(command = lambda: fecha_Cadastro(root))
+
+    # ----- Fim da criação do cadastro -----
+
+def carrega_jogo():
+    global btNovo
+    global btCarrega
+    global root
+    global Todas_Tabelas
+    global rodada
+    global jogador_atual
+    global n_jogadores
+    arquivo = None
+
+    btNovo.destroy()
+    btCarrega.destroy()
+
+    #root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+    root.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("json files","*.json"),("all files","*.*")))
+
+    with open(root.filename, "r") as json_file:
+        arquivo = loads(json_file.read())
+
+    rodada = arquivo["Yahtzee"]["Rodada"]
+    jogador_atual = arquivo["Yahtzee"]["Vez"]
+    n_jogadores = arquivo["Yahtzee"]["Num_jog"]
+
+    tabelas = arquivo["Yahtzee"]["Tabelas"]
+
+    for nome in arquivo["Yahtzee"]["Nome_jog"]:
+        objetoJogador = Tabela(nome)
+        objetoJogador.load(arquivo["Yahtzee"]["Tabelas"][nome])
+        Todas_Tabelas.append([nome, 
+                            objetoJogador,
+                            [
+                                "Um",
+                                "Dois",
+                                "Três",
+                                "Quatro",
+                                "Cinco",
+                                "Seis",
+                                "Trinca",
+                                "Quadra",
+                                "Full House",
+                                "Sequência Mínima",
+                                'Sequência Máxima',
+                                "YAHTZEE",
+                                "Chance"
+                                ]
+                            ])
+    
+    fecha_Cadastro(root)
 
 
 # ----- Fim das funcoes de callback -----
@@ -211,8 +290,23 @@ root = tk.Tk()
 
 # ----- Criação da janela -----
 root.geometry("400x400")
-root.title("Cadastro dos jogadores")
+root.title("Menu Inicial")
 
+# ----- Criação do botao de novo jogo do menu inicial -----
+
+btNovo = tk.Button(root, text = "Novo Jogo", width = 15)
+btNovo.place(x = 50, y = 350)
+btNovo.config(command = lambda: novo_jogo())
+btNovo.pack()
+
+# ----- Criação do botão de carregar e continuar para o jogo-----
+
+btCarrega = tk.Button(root, text = "Carregar Jogo", width = 15)
+btCarrega.place(x = 200, y = 350)
+btCarrega.config(command = lambda: carrega_jogo())
+btNovo.pack()
+
+'''
 # ----- Entrada dos nomes -----
 
 lbNome = tk.Label(root, text = "Nome", width = 12 , anchor = "w")
@@ -235,7 +329,7 @@ btContinua.place(x = 200, y = 350)
 btContinua.config(command = lambda: fecha_Cadastro(root))
 
 # ----- Fim da criação do cadastro -----
-
+'''
 
 
 root.mainloop()
