@@ -14,22 +14,9 @@ from tabelaInferiorController import TabelaInferior
 # ----- Variaveis Globais -----
 
 Todas_Tabelas = []
-criterios = [
-    "Um",
-    "Dois",
-    "Três",
-    "Quatro",
-    "Cinco",
-    "Seis",
-    "Trinca",
-    "Quadra",
-    "Full House",
-    "Sequência Mínima",
-    'Sequência Máxima',
-    "YAHTZEE",
-    "Chance"
-]
 rodada = 0
+jogador_atual = 0
+n_jogadores = 0
 
 # ----- Funções de callback -----
 def trataNome(enNome):
@@ -41,9 +28,28 @@ def trataNome(enNome):
     return True
 
 def add_player(nome):
-    global Tabelas_Superiores
+    global n_jogadores
+    global criterios_jogador
+    n_jogadores += 1
     objetoJogador = Tabela(nome)
-    Todas_Tabelas.append([nome, objetoJogador])
+    Todas_Tabelas.append([nome, 
+                          objetoJogador,
+                          [
+                            "Um",
+                            "Dois",
+                            "Três",
+                            "Quatro",
+                            "Cinco",
+                            "Seis",
+                            "Trinca",
+                            "Quadra",
+                            "Full House",
+                            "Sequência Mínima",
+                            'Sequência Máxima',
+                            "YAHTZEE",
+                            "Chance"
+                            ]
+                        ])
 
 def joga_dados():
     global dado
@@ -52,10 +58,21 @@ def joga_dados():
     root.after(250, checa_termino_jogada)
 
 
-def mostra_tabela():
-    for vet in Todas_Tabelas:
-        if True:
-            objetoJogador = vet[1]
+def mostra_tabela(jogador):
+    lista_jogadores = []
+    for jogador in Todas_Tabelas:
+        lista_jogadores.append(jogador[0])
+    dropdown_root = tk.Toplevel()
+    dropdown_root.geometry("175x100")
+    dropdown_root.title("Jogador")
+    jogador_escolhido = tk.StringVar(dropdown_root)
+    jogador_escolhido.set(lista_jogadores[jogador_atual])
+    dropdown_text = tk.Label(dropdown_root, text="Escolha um jogador").pack()
+    dropdown = tk.OptionMenu(dropdown_root, jogador_escolhido, *lista_jogadores).pack()
+    dropdown_button = tk.Button(dropdown_root, text="Confirmar", command=dropdown_root.destroy).pack()
+    dropdown_root.wait_window(dropdown_root)
+    escolhido = lista_jogadores.index(jogador_escolhido.get())
+    objetoJogador = Todas_Tabelas[escolhido][1]
     upper = TabelaSuperior(tk.Toplevel(), objetoJogador)
     lower = TabelaInferior(tk.Toplevel(), objetoJogador)
     upper.display()
@@ -68,6 +85,12 @@ def fecha_Cadastro(root):
     root.geometry("400x400")
     root.title("Yahtzee")
 
+    # ----- Label exibindo nome e rodada atual -----
+    string_jogador = "Jogador atual: {0}".format(Todas_Tabelas[jogador_atual][0])
+    string_rodada = "Rodada: {0}".format(rodada)
+    label_jogador = tk.Label(root, text=string_jogador).pack()
+    label_rodada = tk.Label(root, text=string_rodada).pack()
+
     # ----- Criação do botão de jogar dado -----
 
     btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
@@ -78,7 +101,7 @@ def fecha_Cadastro(root):
 
     btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
     btTabela.place(x = 135, y = 175)
-    btTabela.config(command = lambda: mostra_tabela())
+    btTabela.config(command = lambda: mostra_tabela(jogador_atual))
 
 
 
@@ -87,23 +110,31 @@ def fecha_Cadastro(root):
 
 def checa_termino_jogada():
     global rodada
+    global criterios_jogador
+    global jogador_atual
     if dado.retorna_bloqueado():
         dados = dado.retorna_dados()
         dropdown_root = tk.Toplevel()
         dropdown_root.geometry("175x100")
         dropdown_root.title("Critério")
         criterio_escolhido = tk.StringVar(dropdown_root)
-        criterio_escolhido.set(criterios[0])
+        criterio_escolhido.set(Todas_Tabelas[jogador_atual][2][0])
         dropdown_text = tk.Label(dropdown_root, text="Escolha um critério").pack()
-        dropdown = tk.OptionMenu(dropdown_root, criterio_escolhido, *criterios).pack()
+        dropdown = tk.OptionMenu(dropdown_root, criterio_escolhido, *Todas_Tabelas[jogador_atual][2]).pack()
         dropdown_button = tk.Button(dropdown_root, text="Confirmar", command=dropdown_root.destroy).pack()
         dropdown_root.wait_window(dropdown_root)
         escolhido = criterio_escolhido.get()
         pontos = pnt_pontua(escolhido, dados)
-        Todas_Tabelas[0][1].insere(escolhido, pontos, rodada) # trocar os indices aqui
-        criterios.remove(escolhido)
+        Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, rodada)
+        Todas_Tabelas[jogador_atual][2].remove(escolhido)
         dado.reinicia()
-        rodada += 1
+        if jogador_atual < n_jogadores - 1:
+            jogador_atual += 1
+        elif jogador_atual == n_jogadores - 1:
+            rodada += 1
+            jogador_atual = 0
+        if rodada == 5:
+            pass # termina a partida
 
     root.after(250, checa_termino_jogada)
 # ---- Inicialização das Janelas -----

@@ -16,7 +16,10 @@ Projects of INF1301 - Modular Programming
     10. Testar se pontuação do jogador que teve a vez terminada foi atualizada. (CT010 - validar termina_vez)
 
 - Implementar casos de teste novos para as coisas que a gente for criando (talvez deixar esse pro final)
-- Quando um jogador pontua, atualizar na tabela.
+- Refresh automático da tabela ao fim de uma jogada (a gente vai mesmo fazer isso?)
+- Preenchimento das pontuações totais na tabela
+- Refazer as janelas de modo que a janela com "Mostrar tabela" e "Jogar dados" seja a principal, assim a gente consegue fazer o próximo item da lista
+- Atualizar o nome do jogador e rodada atual na janela principal
 - Implementar o sistema de vários jogos (um jogo inteiro composto de tipo 3-4 jogos cada um com as suas 13(?) rodadas).
 - Implementar rodadas e múltiplos jogadores.
 - Fazer os requisitos do Ivan que ele botou pdf do desenvolvimento da iteração 4 (vou fazer a lista numerada aqui tbm so que mais tarde)
