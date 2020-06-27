@@ -34,6 +34,9 @@ class Tabela():
         else:
             return False
 
+    def load(self,nova_tabela):
+        self.tabela = nova_tabela
+
     def get(self,campo, rodada):
         if (campo in self.tabela):
             return self.tabela[campo][rodada]
