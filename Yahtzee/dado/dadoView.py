@@ -3,7 +3,7 @@ from random import randint
 import time
 
 class View():
-    def __init__(self, root, model, joga_dados, bloqueia):
+    def __init__(self, root, model, joga_dados, bloqueia, seleciona_dados):
         self.root = root
         self.root.geometry("450x220")
         self.root.title("Dados")
@@ -12,6 +12,7 @@ class View():
         self.root.grid_columnconfigure(0, weight=1)
 
         self.controller_joga_dados = joga_dados
+        self.controller_seleciona_dados = seleciona_dados
         self.bloqueia = bloqueia
         # ---- criação do frame
         self.frame = tk.Frame(root)
@@ -95,49 +96,95 @@ class View():
                     model.dados[4]["selected"] = True
                     model.dados[4]["rect"] = self.canvas.create_rectangle(model.dados[4]["x1"], 15, model.dados[4]["x2"], 48, outline='white')
 
+    def mock_dados(self, model):
+        dados = [1,2,3,4,5,6]
+        dados_selecionados = [1,1,1,1,1]
+        dropdown_root = tk.Toplevel()
+        dropdown_root.geometry("175x250")
+        dropdown_root.title("Seleção de dados")
+        dado_1 = tk.IntVar(dropdown_root)
+        dado_1.set(dados[0])
+        dado_2 = tk.IntVar(dropdown_root)
+        dado_2.set(dados[0])
+        dado_3 = tk.IntVar(dropdown_root)
+        dado_3.set(dados[0])
+        dado_4 = tk.IntVar(dropdown_root)
+        dado_4.set(dados[0])
+        dado_5 = tk.IntVar(dropdown_root)
+        dado_5.set(dados[0])
+        dropdown_text = tk.Label(dropdown_root, text="Escolha os dados").pack()
+        dropdown = tk.OptionMenu(dropdown_root, dado_1, *dados).pack()
+        dropdown = tk.OptionMenu(dropdown_root, dado_2, *dados).pack()
+        dropdown = tk.OptionMenu(dropdown_root, dado_3, *dados).pack()
+        dropdown = tk.OptionMenu(dropdown_root, dado_4, *dados).pack()
+        dropdown = tk.OptionMenu(dropdown_root, dado_5, *dados).pack()
+        dropdown_button = tk.Button(dropdown_root, text="Confirmar", command=dropdown_root.destroy).pack()
+        dropdown_root.wait_window(dropdown_root)
+        dados_selecionados[0] = dado_1.get()
+        dados_selecionados[1] = dado_2.get()
+        dados_selecionados[2] = dado_3.get()
+        dados_selecionados[3] = dado_4.get()
+        dados_selecionados[4] = dado_5.get()
+        return dados_selecionados
+        
+
     # ---- função para redefinir os botões depois do primeiro lançamento de dados
     def define_botoes_inicio(self):
         self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Jogar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
         self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
+        self.botao_seleciona_dados = tk.Button(self.root, bg="white", fg="black", text = "Selecionar Dados", command = self.controller_seleciona_dados)
+        self.botao_seleciona_dados.grid()
 
     # ---- função para redefinir os botões depois do término da jogada 
     def redefine_botoes_inicio(self):
         self.botao_joga_dados.destroy()
         self.botao_termina_jogada.destroy()
+        self.botao_seleciona_dados.destroy()
         self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Jogar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
         self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
+        self.botao_seleciona_dados = tk.Button(self.root, bg="white", fg="black", text = "Selecionar Dados", command = self.controller_seleciona_dados)
+        self.botao_seleciona_dados.grid()
         self.redefine_label_relancamento(0)
 
     # ---- função para redefinir os botões depois do primeiro lançamento de dados
     def redefine_botoes_relancamento(self):
         self.botao_joga_dados.destroy()
         self.botao_termina_jogada.destroy()
+        self.botao_seleciona_dados.destroy()
         self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Relançar Dados", command = self.controller_joga_dados)
         self.botao_joga_dados.grid()
         self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia)
         self.botao_termina_jogada.grid()
+        self.botao_seleciona_dados = tk.Button(self.root, bg="white", fg="black", text = "Selecionar Dados", command = self.controller_seleciona_dados)
+        self.botao_seleciona_dados.grid()
 
     # ---- função para redefinir os botões para só aceitar a finalização da jogada
     def redefine_botoes_termino(self):
         self.botao_joga_dados.destroy()
         self.botao_termina_jogada.destroy()
+        self.botao_seleciona_dados.destroy()
         self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Relançar Dados", command = self.controller_joga_dados, state = 'disabled')
         self.botao_joga_dados.grid()
         self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia)
         self.botao_termina_jogada.grid()
+        self.botao_seleciona_dados = tk.Button(self.root, bg="white", fg="black", text = "Selecionar Dados", command = self.controller_seleciona_dados)
+        self.botao_seleciona_dados.grid()
 
     # ---- função para bloquear os botões depois do término da jogada
     def redefine_botoes_bloqueio(self):
         self.botao_joga_dados.destroy()
         self.botao_termina_jogada.destroy()
-        self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Jogar Dados", command = self.controller_joga_dados, state = 'disabled')
+        self.botao_seleciona_dados.destroy()
+        self.botao_joga_dados = tk.Button(self.root, bg="white", fg="black", text = "Jogar Dados", command = self.controller_joga_dados, state = "disabled")
         self.botao_joga_dados.grid()
         self.botao_termina_jogada = tk.Button(self.root, bg="white", fg="black", text = "Terminar Jogada", command = self.bloqueia, state="disabled")
         self.botao_termina_jogada.grid()
+        self.botao_seleciona_dados = tk.Button(self.root, bg="white", fg="black", text = "Selecionar Dados", command = self.controller_seleciona_dados, state="disabled")
+        self.botao_seleciona_dados.grid()
 
     def redefine_label_relancamento(self, jogadas):
         self.label_relancamentos.destroy()
