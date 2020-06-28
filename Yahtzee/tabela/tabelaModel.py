@@ -32,7 +32,7 @@ class Tabela():
 
 
     def insere(self,campo,valor,rodada):
-        if (campo in self.tabela)            
+        if (campo in self.tabela):           
             # ----- Verifica se inseriu em cima -----
             if(campo in {"Um","Dois","Três","Quatro","Cinco","Seis"}):
                 self.tabela[campo][rodada] = valor
@@ -51,6 +51,7 @@ class Tabela():
                     if self.checa_bonus_inferior(rodada) == True:
                         qntd = self.marca_bonus_inferior(rodada)
                         total += qntd*100
+                        self.trata_bonus_yahtzee(rodada, valor/5)
                     else:
                         self.tabela[campo][rodada] = 50
                 else:
@@ -106,7 +107,6 @@ class Tabela():
         return self.jogador
 
     def checa_bonus_superior(self, rodada):
-        #if self.soma_pontuacao({"Bônus_sup","Trinca","Quadra","Full House","Sequência Mínima","Sequência Máximo","YAHTZEE","Bônus_YAHTZEE","Total"}) >= 63:
         if self.soma_pontuacao(["Um", "Dois", "Três", "Quatro", "Cinco", "Seis"], rodada) >= 63:
             return True
         else:
@@ -121,14 +121,42 @@ class Tabela():
 
     def marca_bonus_inferior(self, rodada):
         bonus = self.get("BÔNUS YAHTZEE", rodada)
+        print(bonus)
         qntd = 0
-        for num in bonus:
-            if num == 0:
-                num = 1
+        for i in range(len(bonus)):
+            if bonus[i] == 0:
+                bonus[i] = 1
                 qntd += 1
                 break
             else:
                 qntd += 1
-        self.insere("BÔNUS YAHTZEE", bonus, valor)
+        print(bonus)
+        self.insere("BÔNUS YAHTZEE", bonus, rodada)
         return qntd
         
+    def trata_bonus_yahtzee(self, rodada, valor):
+        if (valor == 1):
+            campo = "Um"
+            if (self.get("Um", rodada) == 0):
+                self.insere("Um", 5*valor,rodada)
+        elif (valor == 2):
+            campo = "Dois"
+            if (self.get("Dois", rodada) == 0):
+                self.insere("Dois", 5*valor,rodada)
+        elif (valor == 3):
+            campo = "Três"
+            if (self.get("Três", rodada) == 0):
+                self.insere("Três", 5*valor,rodada)
+        elif (valor == 4):
+            campo = "Quatro"
+            if (self.get("Quatro", rodada) == 0):
+                self.insere("Quatro", 5*valor,rodada)
+        elif (valor == 5):
+            campo = "Cinco"
+            if (self.get("Cinco", rodada) == 0):
+                self.insere("Cinco", 5*valor,rodada)
+        else:
+            campo = "Seis"
+            if (self.get("Seis", rodada) == 0):
+                self.insere("Seis", 5*valor,rodada)
+        return 

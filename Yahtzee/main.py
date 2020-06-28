@@ -17,7 +17,7 @@ from json import *
 # ----- Variaveis Globais -----
 
 Todas_Tabelas = []
-rodada = 11
+rodada = 0
 jogo = 0
 jogador_atual = 0
 n_jogadores = 0
@@ -208,25 +208,25 @@ def menu_jogador(root):
     btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
     btJogaDado.place(x = 130, y = 300)
     btJogaDado.config(command = lambda: joga_dados())
-    btJogaDado.pack()
+    
 
     # ----- Ver tabela -----
     btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
     btTabela.place(x = 130, y = 240)
     btTabela.config(command = lambda: mostra_tabela(jogador_atual))
-    btTabela.pack()
+    
 
     # ----- Passar a vez -----
     btPassaVez = tk.Button(root, text = "Passar a Vez", width = 15)
     btPassaVez.place(x = 130, y = 180)
     btPassaVez.config(command = lambda: passa_vez(root))
-    btPassaVez.pack()
+    
 
     # ----- Salvar Jogo -----
     btSalvaJogo = tk.Button(root, text = "Salvar Jogo", width = 15)
     btSalvaJogo.place(x = 130, y = 120)
     btSalvaJogo.config(command = lambda: salvar_jogo())
-    btSalvaJogo.pack()
+   
 
 def fecha_Cadastro(root):
     global Todas_Tabelas
@@ -361,8 +361,14 @@ def checa_termino_jogada():
         dropdown_root.wait_window(dropdown_root)
         escolhido = criterio_escolhido.get()
         pontos = pnt_pontua(escolhido, dados)
-        Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, jogo)
-        Todas_Tabelas[jogador_atual][2].remove(escolhido)
+        if(escolhido == "YAHTZEE"):
+            if(pontos == 0):
+                Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, jogo)
+            else:
+                Todas_Tabelas[jogador_atual][1].insere(escolhido, 5*dados[0], jogo)
+        else:
+            Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, jogo)
+            Todas_Tabelas[jogador_atual][2].remove(escolhido)
         return
 
     root.after(250, checa_termino_jogada)
