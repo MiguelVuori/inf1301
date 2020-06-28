@@ -41,7 +41,7 @@ def salvar_jogo():
 
     json_file = {}
 
-    if jogou:
+    if (ct002()):
         json_file["Yahtzee"] = {}
         json_file["Yahtzee"]["Vez"] = jogador_atual
         json_file["Yahtzee"]["Num_jog"] = n_jogadores
@@ -57,23 +57,13 @@ def salvar_jogo():
         
         with open(filename, "w") as file:
             dump(json_file,file,indent = 2, ensure_ascii=False)
-    
-    # ----- Error handling -----
-    else:
-        error_message_root = tk.Toplevel()
-        error_message_root.geometry("400x100")
-        error_message_root.title("Erro!")
-        label = tk.Label(error_message_root, text="Jogue os dados antes de salvar o jogo!")
-        label.pack(fill='x', padx=50, pady=5)
-        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
-        button_close.pack(fill='x', pady=10)
 
 
 
 def add_player(nome):
     global n_jogadores
     global criterios_jogador
-    if(n_jogadores < 6):
+    if(ct004()):
 
         n_jogadores += 1
         objetoJogador = Tabela(nome)
@@ -103,16 +93,6 @@ def add_player(nome):
         label.pack(fill='x', padx=50, pady=5)
         button_close = tk.Button(registro_root, text="Fechar", command=registro_root.destroy)
         button_close.pack(fill='x', pady=10)
-    
-    # ----- Error handling -----
-    else:
-        error_message_root = tk.Toplevel()
-        error_message_root.geometry("400x100")
-        error_message_root.title("Erro!")
-        label = tk.Label(error_message_root, text="Número máximo de jogadores atingido!")
-        label.pack(fill='x', padx=50, pady=5)
-        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
-        button_close.pack(fill='x', pady=10)
 
 def passa_vez(root):
     global jogador_atual
@@ -120,15 +100,7 @@ def passa_vez(root):
     global jogou
     
     # ----- Error handling -----
-    if jogou == False:
-        error_message_root = tk.Toplevel()
-        error_message_root.geometry("400x100")
-        error_message_root.title("Erro!")
-        label = tk.Label(error_message_root, text="Você precisa pontuar antes de passar a vez!")
-        label.pack(fill='x', padx=50, pady=5)
-        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
-        button_close.pack(fill='x', pady=10)
-    else:
+    if (ct001()):
         if jogador_atual + 1 == n_jogadores:
             rodada += 1
         jogador_atual = (jogador_atual + 1) % n_jogadores
@@ -137,17 +109,7 @@ def passa_vez(root):
 
 def joga_dados():
     global dado
-    # ----- Error handling -----
-    if jogou == True:
-        error_message_root = tk.Toplevel()
-        error_message_root.geometry("400x100")
-        error_message_root.title("Erro!")
-        label = tk.Label(error_message_root, text="Já jogou nessa rodada")
-        label.pack(fill='x', padx=50, pady=5)
-        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
-        button_close.pack(fill='x', pady=10)
-        return
-    else:
+    if (ct005()):
         dadoToplevel = tk.Toplevel()
         dado = Dado(dadoToplevel)
         root.after(250, checa_termino_jogada)
@@ -212,7 +174,7 @@ def fecha_Cadastro(root):
     global Todas_Tabelas
     nomes = ''
     n = 1
-    if (n_jogadores >= 2):
+    if (ct003()):
         random.shuffle(Todas_Tabelas)
         for tabela in Todas_Tabelas:
             nomes += "%d. "%n + tabela[0] + "\n"
@@ -225,16 +187,7 @@ def fecha_Cadastro(root):
         btInicia = tk.Button(sorteio_root, text = "Iniciar jogo", width = 15)
         btInicia.pack(fill='x', pady=10)
         btInicia.config(command = lambda: menu_jogador(root))
-    
-    # ----- Error handling -----
-    else:
-        error_message_root = tk.Toplevel()
-        error_message_root.geometry("400x100")
-        error_message_root.title("Erro!")
-        label = tk.Label(error_message_root, text="Necessário no mínimo dois jogadores!")
-        label.pack(fill='x', padx=50, pady=5)
-        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
-        button_close.pack(fill='x', pady=10)
+
 
 def novo_jogo():
     global btNovo
@@ -342,6 +295,101 @@ def checa_termino_jogada():
         return
 
     root.after(250, checa_termino_jogada)
+
+
+# ------ Casos de Teste Unitários -----
+
+'''
+
+CT001 - Passar a vez:
+
+'''
+
+def ct001():
+    if (jogou == True):
+        return True
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Você precisa pontuar antes de passar a vez!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+        return False
+
+'''
+
+CT002 - Salvar o jogo:
+
+'''
+
+def ct002():
+    if (jogou == True):
+        return True
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Jogue os dados antes de salvar o jogo!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+        return False
+'''
+
+CT003 - Registro mínimo:
+
+'''
+
+def ct003():
+    if (n_jogadores >= 2):
+        return True
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Necessário no mínimo dois jogadores!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+        return False
+'''
+
+CT004 - Registro máximo:
+
+'''
+
+def ct004():
+    if (n_jogadores < 6):
+        return True
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Número máximo de jogadores atingido!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+        return False
+'''
+
+CT005 - Jogar os dados:
+
+'''
+
+def ct005():
+    if (jogou == False):
+        return True
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Já jogou nessa rodada")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
+        return False
 
 
 # ---- Inicialização das Janelas -----
