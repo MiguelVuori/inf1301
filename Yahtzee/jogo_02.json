@@ -3,12 +3,12 @@
     "Vez": 2,
     "Num_jog": 3,
     "Nome_jog": [
-      "lucas",
+      "miguel",
       "gabriel",
-      "miguel"
+      "lucas"
     ],
     "Tabelas": {
-      "lucas": {
+      "miguel": {
         "Um": [
           1,
           0,
@@ -25,7 +25,7 @@
           0,
           0
         ],
-        "Tr\u00eas": [
+        "Três": [
           0,
           0,
           0,
@@ -57,7 +57,7 @@
           0,
           0
         ],
-        "PONTUA\u00c7\u00c3O TOTAL": [
+        "PONTUAÇÃO TOTAL": [
           0,
           0,
           0,
@@ -65,7 +65,7 @@
           0,
           0
         ],
-        "B\u00f4nus_sup": [
+        "Bônus_sup": [
           0,
           0,
           0,
@@ -73,7 +73,7 @@
           0,
           0
         ],
-        "TOTAL (Da se\u00e7\u00e3o superior)": [
+        "TOTAL (Da seção superior)": [
           0,
           0,
           0,
@@ -105,7 +105,7 @@
           0,
           0
         ],
-        "Sequ\u00eancia M\u00ednima": [
+        "Sequência Mínima": [
           0,
           0,
           0,
@@ -113,7 +113,7 @@
           0,
           0
         ],
-        "Sequ\u00eancia M\u00e1xima": [
+        "Sequência Máxima": [
           0,
           0,
           0,
@@ -137,7 +137,7 @@
           0,
           0
         ],
-        "B\u00d4NUS YAHTZEE": [
+        "BÔNUS YAHTZEE": [
           [
             0,
             0,
@@ -169,7 +169,7 @@
             0
           ]
         ],
-        "TOTAL (da se\u00e7\u00e3o inferior)": [
+        "TOTAL (da seção inferior)": [
           0,
           0,
           0,
@@ -177,7 +177,7 @@
           0,
           0
         ],
-        "TOTAL (da se\u00e7\u00e3o superior)": [
+        "TOTAL (da seção superior)": [
           0,
           0,
           0,
@@ -204,14 +204,14 @@
           0
         ],
         "Dois": [
-          2,
+          0,
           0,
           0,
           0,
           0,
           0
         ],
-        "Tr\u00eas": [
+        "Três": [
           0,
           0,
           0,
@@ -236,6 +236,14 @@
           0
         ],
         "Seis": [
+          6,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "PONTUAÇÃO TOTAL": [
           0,
           0,
           0,
@@ -243,7 +251,7 @@
           0,
           0
         ],
-        "PONTUA\u00c7\u00c3O TOTAL": [
+        "Bônus_sup": [
           0,
           0,
           0,
@@ -251,15 +259,7 @@
           0,
           0
         ],
-        "B\u00f4nus_sup": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "TOTAL (Da se\u00e7\u00e3o superior)": [
+        "TOTAL (Da seção superior)": [
           0,
           0,
           0,
@@ -291,7 +291,7 @@
           0,
           0
         ],
-        "Sequ\u00eancia M\u00ednima": [
+        "Sequência Mínima": [
           0,
           0,
           0,
@@ -299,7 +299,7 @@
           0,
           0
         ],
-        "Sequ\u00eancia M\u00e1xima": [
+        "Sequência Máxima": [
           0,
           0,
           0,
@@ -323,7 +323,7 @@
           0,
           0
         ],
-        "B\u00d4NUS YAHTZEE": [
+        "BÔNUS YAHTZEE": [
           [
             0,
             0,
@@ -355,7 +355,7 @@
             0
           ]
         ],
-        "TOTAL (da se\u00e7\u00e3o inferior)": [
+        "TOTAL (da seção inferior)": [
           0,
           0,
           0,
@@ -363,7 +363,7 @@
           0,
           0
         ],
-        "TOTAL (da se\u00e7\u00e3o superior)": [
+        "TOTAL (da seção superior)": [
           0,
           0,
           0,
@@ -380,9 +380,9 @@
           0
         ]
       },
-      "miguel": {
+      "lucas": {
         "Um": [
-          1,
+          0,
           0,
           0,
           0,
@@ -390,14 +390,14 @@
           0
         ],
         "Dois": [
-          0,
+          8,
           0,
           0,
           0,
           0,
           0
         ],
-        "Tr\u00eas": [
+        "Três": [
           0,
           0,
           0,
@@ -429,7 +429,7 @@
           0,
           0
         ],
-        "PONTUA\u00c7\u00c3O TOTAL": [
+        "PONTUAÇÃO TOTAL": [
           0,
           0,
           0,
@@ -437,7 +437,7 @@
           0,
           0
         ],
-        "B\u00f4nus_sup": [
+        "Bônus_sup": [
           0,
           0,
           0,
@@ -445,7 +445,7 @@
           0,
           0
         ],
-        "TOTAL (Da se\u00e7\u00e3o superior)": [
+        "TOTAL (Da seção superior)": [
           0,
           0,
           0,
@@ -477,7 +477,7 @@
           0,
           0
         ],
-        "Sequ\u00eancia M\u00ednima": [
+        "Sequência Mínima": [
           0,
           0,
           0,
@@ -485,7 +485,7 @@
           0,
           0
         ],
-        "Sequ\u00eancia M\u00e1xima": [
+        "Sequência Máxima": [
           0,
           0,
           0,
@@ -509,7 +509,7 @@
           0,
           0
         ],
-        "B\u00d4NUS YAHTZEE": [
+        "BÔNUS YAHTZEE": [
           [
             0,
             0,
@@ -541,7 +541,7 @@
             0
           ]
         ],
-        "TOTAL (da se\u00e7\u00e3o inferior)": [
+        "TOTAL (da seção inferior)": [
           0,
           0,
           0,
@@ -549,7 +549,7 @@
           0,
           0
         ],
-        "TOTAL (da se\u00e7\u00e3o superior)": [
+        "TOTAL (da seção superior)": [
           0,
           0,
           0,

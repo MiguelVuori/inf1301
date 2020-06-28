@@ -55,7 +55,7 @@ def salvar_jogo():
     filename = tk.filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("json files","*.json"),("all files","*.*")))
     
     with open(filename, "w") as file:
-        dump(json_file,file,indent = 2)
+        dump(json_file,file,indent = 2, ensure_ascii=False)
 
 
 
@@ -189,7 +189,7 @@ def menu_jogador(root):
     btPassaVez.config(command = lambda: passa_vez(root))
 
     # ----- Salvar Jogo -----
-    btSalvaJogo = tk.Button(root, text = "Salvar Jogar", width = 15)
+    btSalvaJogo = tk.Button(root, text = "Salvar Jogo", width = 15)
     btSalvaJogo.place(x = 135, y = 125)
     btSalvaJogo.config(command = lambda: salvar_jogo())
 
