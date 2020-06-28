@@ -50,7 +50,8 @@ class Tabela():
                 total = 0
                 if(campo == "YAHTZEE"):
                     if self.checa_bonus_inferior(rodada) == True:
-                        total += 100
+                        qntd = self.marca_bonus_inferior(rodada)
+                        total += qntd*100
                     else:
                         self.tabela[campo][rodada] = 50
                 else:
@@ -114,9 +115,21 @@ class Tabela():
 
         
     def checa_bonus_inferior(self, rodada):
-        if self.get("YAHTZEE") == 0:
+        if self.get("YAHTZEE", rodada) == 0:
             return False
         else:
             return True
 
+    def marca_bonus_inferior(self, rodada):
+        bonus = self.get("BÔNUS YAHTZEE", rodada)
+        qntd = 0
+        for num in bonus:
+            if num == 0:
+                num = 1
+                qntd += 1
+                break
+            else:
+                qntd += 1
+        self.insere("BÔNUS YAHTZEE", bonus, valor)
+        return qntd
         

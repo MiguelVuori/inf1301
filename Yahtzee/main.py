@@ -18,6 +18,7 @@ from json import *
 
 Todas_Tabelas = []
 rodada = 0
+jogo = 0
 jogador_atual = 0
 n_jogadores = 0
 jogou = False
@@ -336,7 +337,7 @@ def checa_termino_jogada():
         dropdown_root.wait_window(dropdown_root)
         escolhido = criterio_escolhido.get()
         pontos = pnt_pontua(escolhido, dados)
-        Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, rodada)
+        Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, jogo)
         Todas_Tabelas[jogador_atual][2].remove(escolhido)
         return
 

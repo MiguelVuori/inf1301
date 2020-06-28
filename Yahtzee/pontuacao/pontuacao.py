@@ -13,6 +13,7 @@ def init():
 
 def pnt_pontua(criterio, res):
     pontos = 0
+            
     if (criterio == 'Um'):
         for i in range(5):
             if res[i] == 1:
@@ -50,8 +51,7 @@ def pnt_pontua(criterio, res):
             if (res[i] == res[i+1] == res[i+2]):
                 trinca = 1
         if (trinca == 0):
-            print("Critério Trinca não aceito")
-            return False
+            return 0
         else:
             for i in range(5):
                 pontos += res[i]
@@ -62,8 +62,7 @@ def pnt_pontua(criterio, res):
             if (res[i] == res[i+1] == res[i+2]):
                 quadra = 1
         if (quadra == 0):
-            print("Critério Quadra não aceito")
-            return False
+            return 0
         else:
             for i in range(5):
                 pontos += res[i]
@@ -74,15 +73,15 @@ def pnt_pontua(criterio, res):
             if tmp.count(tmp[0]) == 2:
                 pontos += 25
             else:
-                return False
-        elif tmp.count(tmp[0]) == 2:
+                return 0
+        elif tmp.count(tmp[0] == 2):
             tmp[:] = (value for value in tmp if value != tmp[0])
             if tmp.count(tmp[0]) == 3:
                 pontos += 25
             else:
-                return False
+                return 0
         else:
-            return False
+            return 0
     elif (criterio == 'Sequência Mínima'):
         res.sort()
         count = 0
@@ -92,7 +91,7 @@ def pnt_pontua(criterio, res):
             if count == 3:
                 pontos += 30
         if count < 3:
-            return False
+            return 0
     elif (criterio == 'Sequência Máxima'):
         res.sort()
         count = 0
@@ -102,16 +101,15 @@ def pnt_pontua(criterio, res):
             if count == 4:
                 pontos += 40
         if count < 4:
-            return False
+            return 0
     elif (criterio == 'YAHTZEE'):
         soma = 0
         for i in range(len(res)):
             soma += res[i]
         if (soma != res[i]*5):
-            print("Critério YAHTZEE não aceito")
-            return False
+            return 0
         else:
-            pontos = 50
+            pontos = soma
     elif (criterio == 'Chance'):
         for i in range(5):
             pontos += res[i]  
@@ -143,7 +141,7 @@ def pnt_testa_bonus(jogador,tipo):
         else:
             return False
     elif tipo == "inferior":
-        if tab_get(jogador,'YAHTZEE') == 0:
+        if tab_get(jogador,"YAHTZEE") == 0:
             return False
         else:
             return True

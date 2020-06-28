@@ -44,8 +44,7 @@ class Pontuacao():
                     if (res[i] == res[i+1] == res[i+2]):
                         trinca = 1
                 if (trinca == 0):
-                    print("Critério Trinca não aceito")
-                    return False
+                    return 0
                 else:
                     for i in range(5):
                         pontos += res[i]
@@ -56,8 +55,7 @@ class Pontuacao():
                     if (res[i] == res[i+1] == res[i+2]):
                         quadra = 1
                 if (quadra == 0):
-                    print("Critério Quadra não aceito")
-                    return False
+                    return 0
                 else:
                     for i in range(5):
                         pontos += res[i]
@@ -68,15 +66,15 @@ class Pontuacao():
                     if tmp.count(tmp[0]) == 2:
                         pontos += 25
                     else:
-                        return False
+                        return 0
                 elif tmp.count(tmp[0] == 2):
                     tmp[:] = (value for value in tmp if value != tmp[0])
                     if tmp.count(tmp[0]) == 3:
                         pontos += 25
                     else:
-                        return False
+                        return 0
                 else:
-                    return False
+                    return 0
             elif (criterio == 'Sequência Mínima'):
                 res.sort()
                 count = 0
@@ -86,7 +84,7 @@ class Pontuacao():
                     if count == 3:
                         pontos += 30
                 if count < 3:
-                    return False
+                    return 0
             elif (criterio == 'Sequência Máxima'):
                 res.sort()
                 count = 0
@@ -96,14 +94,14 @@ class Pontuacao():
                     if count == 4:
                         pontos += 40
                 if count < 4:
-                    return False
+                    return 0
             elif (criterio == 'YAHTZEE'):
                 soma = 0
                 for i in range(len(res)):
                     soma += res[i]
                 if (soma != res[i]*5):
                     print("Critério YAHTZEE não aceito")
-                    return False
+                    return 0
                 else:
                     pontos = soma
             elif (criterio == 'Chance'):
