@@ -17,7 +17,7 @@ from json import *
 # ----- Variaveis Globais -----
 
 Todas_Tabelas = []
-rodada = 0
+rodada = 11
 jogo = 0
 jogador_atual = 0
 n_jogadores = 0
@@ -47,7 +47,7 @@ def salvar_jogo():
         json_file["Yahtzee"]["Num_jog"] = n_jogadores
         json_file["Yahtzee"]["Nome_jog"] = []
         json_file["Yahtzee"]["Tabelas"] = {}
-        json_file["Yahtzee"]["Partida"] = 0
+        json_file["Yahtzee"]["Partida"] = jogo
         json_file["Yahtzee"]["Rodada"] = rodada
         for i in Todas_Tabelas:
             json_file["Yahtzee"]["Nome_jog"].append(i[0])
@@ -98,14 +98,68 @@ def passa_vez(root):
     global jogador_atual
     global rodada
     global jogou
+    global jogo
+
     
     # ----- Error handling -----
     if (ct001()):
         if jogador_atual + 1 == n_jogadores:
             rodada += 1
+
         jogador_atual = (jogador_atual + 1) % n_jogadores
         jogou = False
-        menu_jogador(root)
+
+        if rodada == 12:
+            
+            rodada = 0
+            jogo += 1
+            
+            if jogo == 6:
+                root.destroy()
+            else:
+                maior_pontuacao = 0
+                jogador_vencedor = ""
+                list_labels = []
+                root.destroy()
+                root = tk.Tk()
+                root.geometry("600x600")
+
+                root.title("Fim de partida")
+                Label_pontuacao = tk.Label(root, text = "Pontuação")
+                Label_jogadores = tk.Label(root, text = "Jogadores")
+                Label_jogadores.grid(row = 0, column = 0)
+                Label_pontuacao.grid(row = 0, column = 2)
+
+                for i,value in enumerate(Todas_Tabelas):
+                    jogador = tk.Label(root, text = value[0])
+                    pontuacao_jogador = tk.Label(root, text = (value[1]).get("TOTAL GERAL", 0))
+
+                    if ((value[1]).get("TOTAL GERAL", 0) > maior_pontuacao):
+                        jogador_vencedor = value[0]
+
+                    jogador.grid(row = i + 1, column = 0)
+                    pontuacao_jogador.grid(row = i + 1, column = 2)
+
+                    list_labels.append([jogador,pontuacao_jogador])
+
+                Label_vencedor = tk.Label(root, text = "O jogador " + jogador_vencedor + " venceu!!")
+                Label_vencedor.grid(row = 14, column = 1)
+
+                # ----- Criação do botão de reiniciar Jogo -----
+                
+                btNovo = tk.Button(root, text = "Novo Jogo", width = 15)
+                btNovo.grid(row = 15, column = 0)
+                btNovo.config(command = lambda: menu_jogador(root))
+
+                # ----- Criação do botão de terminar Jogo -----
+                
+                btTermina = tk.Button(root, text = "Terminar Jogo", width = 15)
+                btTermina.grid(row = 15, column = 2)
+                btTermina.config(command = lambda: terminar_jogo(root))
+
+            
+        else:
+            menu_jogador(root)
 
 def joga_dados():
     global dado
@@ -154,21 +208,25 @@ def menu_jogador(root):
     btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
     btJogaDado.place(x = 130, y = 300)
     btJogaDado.config(command = lambda: joga_dados())
+    btJogaDado.pack()
 
     # ----- Ver tabela -----
     btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
     btTabela.place(x = 130, y = 240)
     btTabela.config(command = lambda: mostra_tabela(jogador_atual))
+    btTabela.pack()
 
     # ----- Passar a vez -----
     btPassaVez = tk.Button(root, text = "Passar a Vez", width = 15)
     btPassaVez.place(x = 130, y = 180)
     btPassaVez.config(command = lambda: passa_vez(root))
+    btPassaVez.pack()
 
     # ----- Salvar Jogo -----
     btSalvaJogo = tk.Button(root, text = "Salvar Jogo", width = 15)
     btSalvaJogo.place(x = 130, y = 120)
     btSalvaJogo.config(command = lambda: salvar_jogo())
+    btSalvaJogo.pack()
 
 def fecha_Cadastro(root):
     global Todas_Tabelas
@@ -190,11 +248,19 @@ def fecha_Cadastro(root):
 
 
 def novo_jogo():
+    '''
     global btNovo
     global btCarrega
 
     btNovo.destroy()
     btCarrega.destroy()
+    '''
+    global root
+
+    root.destroy()
+    root = tk.Tk()
+    root.geometry("400x400")
+    root.title("Yahtzee")
 
     # ----- Entrada dos nomes -----
 
@@ -219,6 +285,9 @@ def novo_jogo():
 
     # ----- Fim da criação do cadastro -----
 
+def terminar_jogo(root):
+    root.destroy()
+
 def carrega_jogo():
     global btNovo
     global btCarrega
@@ -227,6 +296,7 @@ def carrega_jogo():
     global rodada
     global jogador_atual
     global n_jogadores
+    global jogo
     arquivo = None
 
     btNovo.destroy()
@@ -241,6 +311,7 @@ def carrega_jogo():
     rodada = arquivo["Yahtzee"]["Rodada"]
     jogador_atual = arquivo["Yahtzee"]["Vez"]
     n_jogadores = arquivo["Yahtzee"]["Num_jog"]
+    jogo = arquivo["Yahtzee"]["Partida"]
 
     tabelas = arquivo["Yahtzee"]["Tabelas"]
 
