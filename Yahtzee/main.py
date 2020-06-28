@@ -52,10 +52,18 @@ def salvar_jogo():
             json_file["Yahtzee"]["Nome_jog"].append(i[0])
             json_file["Yahtzee"]["Tabelas"][i[0]] = i[1].get_tabela()
 
-    filename = tk.filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("json files","*.json"),("all files","*.*")))
-    
-    with open(filename, "w") as file:
-        dump(json_file,file,indent = 2, ensure_ascii=False)
+        filename = tk.filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("json files","*.json"),("all files","*.*")))
+        
+        with open(filename, "w") as file:
+            dump(json_file,file,indent = 2, ensure_ascii=False)
+    else:
+        error_message_root = tk.Toplevel()
+        error_message_root.geometry("400x100")
+        error_message_root.title("Erro!")
+        label = tk.Label(error_message_root, text="Jogue os dados antes de salvar o jogo!")
+        label.pack(fill='x', padx=50, pady=5)
+        button_close = tk.Button(error_message_root, text="Fechar", command=error_message_root.destroy)
+        button_close.pack(fill='x', pady=10)
 
 
 
