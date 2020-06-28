@@ -27,6 +27,10 @@ class Tabela():
         "TOTAL GERAL": [0,0,0,0,0,0]
         }
 
+    def get_tabela(self):
+        return self.tabela
+
+
     def insere(self,campo,valor,rodada):
         if (campo in self.tabela) and (self.tabela[campo][rodada] == 0):
             self.tabela[campo][rodada] = valor

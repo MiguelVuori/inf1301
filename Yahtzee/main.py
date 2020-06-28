@@ -31,6 +31,34 @@ def trataNome(enNome):
             return False
     return True
 
+def salvar_jogo():
+    global Todas_Tabelas
+    global rodada
+    global jogador_atual
+    global n_jogadores
+    global jogou
+
+    json_file = {}
+
+    if jogou:
+        json_file["Yahtzee"] = {}
+        json_file["Yahtzee"]["Vez"] = jogador_atual
+        json_file["Yahtzee"]["Num_jog"] = n_jogadores
+        json_file["Yahtzee"]["Nome_jog"] = []
+        json_file["Yahtzee"]["Tabelas"] = {}
+        json_file["Yahtzee"]["Partida"] = 0
+        json_file["Yahtzee"]["Rodada"] = rodada
+        for i in Todas_Tabelas:
+            json_file["Yahtzee"]["Nome_jog"].append(i[0])
+            json_file["Yahtzee"]["Tabelas"][i[0]] = i[1].get_tabela()
+
+    filename = tk.filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("json files","*.json"),("all files","*.*")))
+    
+    with open(filename, "w") as file:
+        dump(json_file,file,indent = 2)
+
+
+
 def add_player(nome):
     global n_jogadores
     global criterios_jogador
@@ -100,6 +128,8 @@ def joga_dados():
     root.after(250, checa_termino_jogada)
 
 
+
+
 def mostra_tabela(jogador):
     lista_jogadores = []
     for jogador in Todas_Tabelas:
@@ -133,7 +163,6 @@ def menu_jogador(root):
     label_jogador = tk.Label(root, text=string_jogador).pack()
     label_rodada = tk.Label(root, text=string_rodada).pack()
     
-
     # ----- Criação do botão de jogar dado -----
     btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
     btJogaDado.place(x = 135, y = 200)
@@ -149,6 +178,10 @@ def menu_jogador(root):
     btPassaVez.place(x = 135, y = 150)
     btPassaVez.config(command = lambda: passa_vez(root))
 
+    # ----- Salvar Jogo -----
+    btSalvaJogo = tk.Button(root, text = "Salvar Jogar", width = 15)
+    btSalvaJogo.place(x = 135, y = 125)
+    btSalvaJogo.config(command = lambda: salvar_jogo())
 
 def fecha_Cadastro(root):
     global Todas_Tabelas
@@ -220,7 +253,7 @@ def carrega_jogo():
     btNovo.destroy()
     btCarrega.destroy()
 
-    #root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+    
     root.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("json files","*.json"),("all files","*.*")))
 
     with open(root.filename, "r") as json_file:
