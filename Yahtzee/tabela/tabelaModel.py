@@ -32,7 +32,7 @@ class Tabela():
 
 
     def insere(self,campo,valor,rodada):
-        if (campo in self.tabela)            
+        if (campo in self.tabela):         
             # ----- Verifica se inseriu em cima -----
             if(campo in {"Um","Dois","Três","Quatro","Cinco","Seis"}):
                 self.tabela[campo][rodada] = valor
