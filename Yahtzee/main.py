@@ -47,11 +47,13 @@ def salvar_jogo():
         json_file["Yahtzee"]["Num_jog"] = n_jogadores
         json_file["Yahtzee"]["Nome_jog"] = []
         json_file["Yahtzee"]["Tabelas"] = {}
+        json_file["Yahtzee"]["Criterios"] = {}
         json_file["Yahtzee"]["Partida"] = jogo
         json_file["Yahtzee"]["Rodada"] = rodada
         for i in Todas_Tabelas:
             json_file["Yahtzee"]["Nome_jog"].append(i[0])
             json_file["Yahtzee"]["Tabelas"][i[0]] = i[1].get_tabela()
+            json_file["Yahtzee"]["Criterios"][i[0]] = i[2]
 
         filename = tk.filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("json files","*.json"),("all files","*.*")))
         
@@ -113,7 +115,7 @@ def passa_vez(root):
             
             rodada = 0
             jogo += 1
-            
+
             if jogo == 6:
                 root.destroy()
             else:
@@ -248,13 +250,6 @@ def fecha_Cadastro(root):
 
 
 def novo_jogo():
-    '''
-    global btNovo
-    global btCarrega
-
-    btNovo.destroy()
-    btCarrega.destroy()
-    '''
     global root
 
     root.destroy()
@@ -320,21 +315,7 @@ def carrega_jogo():
         objetoJogador.load(arquivo["Yahtzee"]["Tabelas"][nome])
         Todas_Tabelas.append([nome, 
                             objetoJogador,
-                            [
-                                "Um",
-                                "Dois",
-                                "Três",
-                                "Quatro",
-                                "Cinco",
-                                "Seis",
-                                "Trinca",
-                                "Quadra",
-                                "Full House",
-                                "Sequência Mínima",
-                                'Sequência Máxima',
-                                "YAHTZEE",
-                                "Chance"
-                                ]
+                            arquivo["Yahtzee"]["Criterios"][nome]
                             ])
     
     fecha_Cadastro(root)

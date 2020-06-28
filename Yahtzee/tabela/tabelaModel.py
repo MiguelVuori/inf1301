@@ -121,7 +121,6 @@ class Tabela():
 
     def marca_bonus_inferior(self, rodada):
         bonus = self.get("BÔNUS YAHTZEE", rodada)
-        print(bonus)
         qntd = 0
         for i in range(len(bonus)):
             if bonus[i] == 0:
@@ -130,7 +129,6 @@ class Tabela():
                 break
             else:
                 qntd += 1
-        print(bonus)
         self.insere("BÔNUS YAHTZEE", bonus, rodada)
         return qntd
         
