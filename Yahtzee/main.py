@@ -56,6 +56,8 @@ def salvar_jogo():
         
         with open(filename, "w") as file:
             dump(json_file,file,indent = 2, ensure_ascii=False)
+    
+    # ----- Error handling -----
     else:
         error_message_root = tk.Toplevel()
         error_message_root.geometry("400x100")
@@ -101,6 +103,7 @@ def add_player(nome):
         button_close = tk.Button(registro_root, text="Fechar", command=registro_root.destroy)
         button_close.pack(fill='x', pady=10)
     
+    # ----- Error handling -----
     else:
         error_message_root = tk.Toplevel()
         error_message_root.geometry("400x100")
@@ -114,6 +117,8 @@ def passa_vez(root):
     global jogador_atual
     global rodada
     global jogou
+    
+    # ----- Error handling -----
     if jogou == False:
         error_message_root = tk.Toplevel()
         error_message_root.geometry("400x100")
@@ -131,6 +136,7 @@ def passa_vez(root):
 
 def joga_dados():
     global dado
+    # ----- Error handling -----
     if jogou == True:
         error_message_root = tk.Toplevel()
         error_message_root.geometry("400x100")
@@ -219,6 +225,7 @@ def fecha_Cadastro(root):
         btInicia.pack(fill='x', pady=10)
         btInicia.config(command = lambda: menu_jogador(root))
     
+    # ----- Error handling -----
     else:
         error_message_root = tk.Toplevel()
         error_message_root.geometry("400x100")
