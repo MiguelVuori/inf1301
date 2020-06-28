@@ -22,7 +22,13 @@ class Model():
         for indice in lista_de_indices:
             self.dados[indice]['dado'] = rands[rand_i]
             rand_i += 1
-        
+    
+    def seleciona_dados(self, dados):
+        i = 0
+        for dado in self.dados.values():
+            dado['dado'] = dados[i]
+            i += 1
+
     def pega_dados(self):
         return self.dados
 

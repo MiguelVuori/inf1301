@@ -4,7 +4,7 @@ from dadoView import View
 class Dado():
     def __init__(self, root):
         self.model = Model()
-        self.view = View(root, self.model, self.joga_dados, self.bloqueia)
+        self.view = View(root, self.model, self.joga_dados, self.bloqueia, self.seleciona_dados)
         self.view.define_botoes_inicio()
         self.view.redefine_label_relancamento(self.model.jogadas)
 
@@ -30,6 +30,14 @@ class Dado():
                 self.view.redefine_botoes_termino()
                 self.view.redefine_label_relancamento(self.model.jogadas)
                 self.view.atualiza_dados(self.model, [0,1,2,3,4])
+
+    def seleciona_dados(self):
+        dados = self.view.mock_dados(self.model)
+        self.model.seleciona_dados(dados)
+        self.view.atualiza_dados(self.model, [0,1,2,3,4])
+        self.model.jogadas += 1
+        self.view.redefine_botoes_termino()
+        self.view.redefine_label_relancamento(self.model.jogadas)
 
     def retorna_dados(self):
         return self.model.pega_dados_int()
