@@ -175,22 +175,22 @@ def menu_jogador(root):
     
     # ----- Criação do botão de jogar dado -----
     btJogaDado = tk.Button(root, text = "Rolar os Dados", width = 15)
-    btJogaDado.place(x = 135, y = 200)
+    btJogaDado.place(x = 130, y = 300)
     btJogaDado.config(command = lambda: joga_dados())
 
     # ----- Ver tabela -----
     btTabela = tk.Button(root, text = "Ver Tabela", width = 15)
-    btTabela.place(x = 135, y = 175)
+    btTabela.place(x = 130, y = 240)
     btTabela.config(command = lambda: mostra_tabela(jogador_atual))
 
     # ----- Passar a vez -----
     btPassaVez = tk.Button(root, text = "Passar a Vez", width = 15)
-    btPassaVez.place(x = 135, y = 150)
+    btPassaVez.place(x = 130, y = 180)
     btPassaVez.config(command = lambda: passa_vez(root))
 
     # ----- Salvar Jogo -----
     btSalvaJogo = tk.Button(root, text = "Salvar Jogo", width = 15)
-    btSalvaJogo.place(x = 135, y = 125)
+    btSalvaJogo.place(x = 130, y = 120)
     btSalvaJogo.config(command = lambda: salvar_jogo())
 
 def fecha_Cadastro(root):
@@ -339,41 +339,15 @@ root.title("Menu Inicial")
 # ----- Criação do botao de novo jogo do menu inicial -----
 
 btNovo = tk.Button(root, text = "Novo Jogo", width = 15)
-btNovo.place(x = 50, y = 350)
+btNovo.place(x = 130, y = 100)
 btNovo.config(command = lambda: novo_jogo())
-btNovo.pack()
+
 
 # ----- Criação do botão de carregar e continuar para o jogo-----
 
 btCarrega = tk.Button(root, text = "Carregar Jogo", width = 15)
-btCarrega.place(x = 200, y = 350)
+btCarrega.place(x = 130, y = 175)
 btCarrega.config(command = lambda: carrega_jogo())
-btNovo.pack()
-
-'''
-# ----- Entrada dos nomes -----
-
-lbNome = tk.Label(root, text = "Nome", width = 12 , anchor = "w")
-lbNome.place(x = 10, y = 50)
-enNome = tk.Entry(root, width = 10)
-enNome.focus_set()
-enNome.config(validate = "focusout", validatecommand = lambda: trataNome(enNome))
-enNome.place(x = 75, y = 50)
-
-# ----- Criação do botão de inclusão -----
-
-btInclui = tk.Button(root, text = "Incluir", width = 15)
-btInclui.place(x = 50, y = 350)
-btInclui.config(command = lambda: add_player(enNome.get()))
-
-# ----- Criação do botão de finalizar cadastro e continuar para o jogo-----
-
-btContinua = tk.Button(root, text = "Continuar", width = 15)
-btContinua.place(x = 200, y = 350)
-btContinua.config(command = lambda: fecha_Cadastro(root))
-
-# ----- Fim da criação do cadastro -----
-'''
 
 
 root.mainloop()
