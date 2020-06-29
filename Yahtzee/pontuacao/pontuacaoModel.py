@@ -67,7 +67,7 @@ class Pontuacao():
                         pontos += 25
                     else:
                         return 0
-                elif tmp.count(tmp[0] == 2):
+                elif tmp.count(tmp[0]) == 2:
                     tmp[:] = (value for value in tmp if value != tmp[0])
                     if tmp.count(tmp[0]) == 3:
                         pontos += 25
