@@ -45,7 +45,7 @@ class Tabela():
                 self.insere("TOTAL (da seção superior)", total, rodada)
                 self.insere("TOTAL GERAL", total + self.get("TOTAL (da seção inferior)", rodada), rodada)
             # ----- Inseriu embaixo -----
-            elif (campo in {"Trinca","Quadra","Full House","Sequência Mínima","Sequência Máximo","Chance","YAHTZEE"}):
+            elif (campo in {"Trinca","Quadra","Full House","Sequência Mínima","Sequência Máxima","Chance","YAHTZEE"}):
                 total = 0
                 if(campo == "YAHTZEE"):
                     if self.checa_bonus_inferior(rodada) == True:
@@ -56,7 +56,7 @@ class Tabela():
                         self.tabela[campo][rodada] = 50
                 else:
                     self.tabela[campo][rodada] = valor
-                total += self.soma_pontuacao({"Trinca","Quadra","Full House","Sequência Mínima","Sequência Máximo","Chance","YAHTZEE"}, rodada)
+                total += self.soma_pontuacao({"Trinca","Quadra","Full House","Sequência Mínima","Sequência Máxima","Chance","YAHTZEE"}, rodada)
                 self.insere("TOTAL (da seção inferior)", total, rodada)
                 self.insere("TOTAL GERAL", total + self.get("TOTAL (Da seção superior)", rodada), rodada)
             else:
@@ -99,7 +99,7 @@ class Tabela():
     def soma_pontuacao(self, desejados, rodada):
         soma = 0
         for campo in self.tabela:
-            if campo  in desejados:
+            if campo in desejados:
                 soma += self.tabela[campo][rodada]
         return soma
 
