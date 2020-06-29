@@ -8,7 +8,7 @@ import random
 import tkinter as tk
 from tkinter import filedialog
 from dadoController import Dado
-from pontuacao import *
+from pontuacaoModel import Pontuacao
 from tabelaModel import Tabela
 from tabelaSuperiorController import TabelaSuperior
 from tabelaInferiorController import TabelaInferior
@@ -329,6 +329,7 @@ def checa_termino_jogada():
     global jogador_atual
     global jogou
     if dado.retorna_bloqueado():
+        pnt = Pontuacao()
         jogou = True
         dados = dado.retorna_dados()
         dropdown_root = tk.Toplevel()
@@ -341,7 +342,7 @@ def checa_termino_jogada():
         dropdown_button = tk.Button(dropdown_root, text="Confirmar", command=dropdown_root.destroy).pack()
         dropdown_root.wait_window(dropdown_root)
         escolhido = criterio_escolhido.get()
-        pontos = pnt_pontua(escolhido, dados)
+        pontos = pnt.calcula_pontuacao(escolhido, dados)
         if(escolhido == "YAHTZEE"):
             if(pontos == 0):
                 Todas_Tabelas[jogador_atual][1].insere(escolhido, pontos, jogo)
