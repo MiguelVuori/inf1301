@@ -3,7 +3,8 @@
     "Num_jog": 3,
     "Nome_jog": ["miguel","gabriel","lucas"],
     "Partida": 0,
-    "Rodada": 1,
+    "Rodada": 11,
+    "Partida": 0,
     "Tabelas":{
         "miguel": {
             "Um": [1,0,0,0,0,0],
