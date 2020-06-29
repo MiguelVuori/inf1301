@@ -4,18 +4,22 @@
     "Nome_jog": ["miguel","gabriel","lucas"],
     "Partida": 0,
     "Rodada": 11,
-    "Partida": 0,
+    "Criterios":{
+        "miguel": [],
+        "gabriel": ["Dois"],
+        "lucas": ["Três"]
+    },
     "Tabelas":{
         "miguel": {
-            "Um": [1,0,0,0,0,0],
-            "Dois": [0,0,0,0,0,0],
+            "Um": [0,0,0,0,0,0],
+            "Dois": [2,0,0,0,0,0],
             "Três": [0,0,0,0,0,0],
-            "Quatro": [4,0,0,0,0,0],
+            "Quatro": [0,0,0,0,0,0],
             "Cinco": [0,0,0,0,0,0],
             "Seis": [0,0,0,0,0,0],
-            "PONTUAÇÃO TOTAL": [0,0,0,0,0,0],
+            "PONTUAÇÃO TOTAL": [2,0,0,0,0,0],
             "Bônus_sup": [0,0,0,0,0,0],
-            "TOTAL (Da seção superior)": [0,0,0,0,0,0],
+            "TOTAL (Da seção superior)": [2,0,0,0,0,0],
             "Trinca": [0,0,0,0,0,0],
             "Quadra": [0,0,0,0,0,0],
             "Full House": [0,0,0,0,0,0],
@@ -25,12 +29,12 @@
             "Chance": [0,0,0,0,0,0],
             "BÔNUS YAHTZEE": [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
             "TOTAL (da seção inferior)": [0,0,0,0,0,0],
-            "TOTAL (da seção superior)": [0,0,0,0,0,0],
-            "TOTAL GERAL": [0,0,0,0,0,0]
+            "TOTAL (da seção superior)": [2,0,0,0,0,0],
+            "TOTAL GERAL": [2,0,0,0,0,0]
         },
         "gabriel": {
             "Um": [0,0,0,0,0,0],
-            "Dois": [2,0,0,0,0,0],
+            "Dois": [0,0,0,0,0,0],
             "Três": [0,0,0,0,0,0],
             "Quatro": [0,0,0,0,0,0],
             "Cinco": [0,0,0,0,0,0],
@@ -53,7 +57,7 @@
         "lucas": {
         "Um": [0,0,0,0,0,0],
         "Dois": [0,0,0,0,0,0],
-        "Três": [3,0,0,0,0,0],
+        "Três": [0,0,0,0,0,0],
         "Quatro": [0,0,0,0,0,0],
         "Cinco": [0,0,0,0,0,0],
         "Seis": [0,0,0,0,0,0],
