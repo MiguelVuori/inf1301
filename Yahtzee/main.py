@@ -116,6 +116,7 @@ def passa_vez(root):
             rodada = 0
             jogo += 1
 
+
             if jogo == 6:
                 root.destroy()
             else:
@@ -143,6 +144,22 @@ def passa_vez(root):
                     pontuacao_jogador.grid(row = i + 1, column = 2)
 
                     list_labels.append([jogador,pontuacao_jogador])
+                    
+                    Todas_Tabelas[i][2] = [
+                                "Um",
+                                "Dois",
+                                "Três",
+                                "Quatro",
+                                "Cinco",
+                                "Seis",
+                                "Trinca",
+                                "Quadra",
+                                "Full House",
+                                "Sequência Mínima",
+                                'Sequência Máxima',
+                                "YAHTZEE",
+                                "Chance"
+                                ]
 
                 Label_vencedor = tk.Label(root, text = "O jogador " + jogador_vencedor + " venceu!!")
                 Label_vencedor.grid(row = 14, column = 1)
@@ -230,12 +247,13 @@ def menu_jogador(root):
     btSalvaJogo.config(command = lambda: salvar_jogo())
    
 
-def fecha_Cadastro(root):
+def fecha_Cadastro(root,load = True):
     global Todas_Tabelas
     nomes = ''
     n = 1
     if (ct003()):
-        random.shuffle(Todas_Tabelas)
+        if load == True :
+            random.shuffle(Todas_Tabelas)
         for tabela in Todas_Tabelas:
             nomes += "%d. "%n + tabela[0] + "\n"
             n += 1
@@ -318,7 +336,7 @@ def carrega_jogo():
                             arquivo["Yahtzee"]["Criterios"][nome]
                             ])
     
-    fecha_Cadastro(root)
+    fecha_Cadastro(root,load = False)
 
 
 # ----- Fim das funcoes de callback -----
